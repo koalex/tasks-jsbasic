@@ -1,6 +1,8 @@
 // Karma configuration
 // Generated on Sun Nov 26 2017 12:48:45 GMT+0000 (GMT)
 
+const { TRAVIS } = process.env;
+
 module.exports = function(config) {
   config.set({
     
@@ -34,7 +36,7 @@ module.exports = function(config) {
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['json'], // progress
+    reporters: [TRAVIS ? 'json' : 'dots'], // progress
     
     jsonReporter: {
       stdout: true,

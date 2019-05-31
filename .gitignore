@@ -139,5 +139,6 @@ teacher.karma.conf.js
 .env
 
 .DS_Store
+.vscode
 
 package-lock.json
