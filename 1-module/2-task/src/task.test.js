@@ -14,4 +14,8 @@ describe("1-module-2-task", function() {
         expect(isValid('Ili')).toEqual(false);
     });
 
+    it ("если вызываем не передавая ничего, то должен вернуть false", function () {
+      expect(isValid()).toEqual(false);
+    });
+
 });
