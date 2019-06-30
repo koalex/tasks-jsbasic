@@ -17,7 +17,7 @@ let rows = [
         city: 'Petrozavodsk'
     },
     {
-        id: 2
+        id: 2,
         name: 'Vasya',
         age: 14,
         salary: 1500,
