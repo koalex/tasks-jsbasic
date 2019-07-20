@@ -10,8 +10,3 @@
 - [Отладка в браузере Chrome](http://learn.javascript.ru/debugging-chrome)
 - [Советы по стилю кода](http://learn.javascript.ru/coding-style)
 - [Как писать неподдерживаемый код](http://learn.javascript.ru/write-unmain-code)
-
-Дополнительное чтение:
-- [Ограничения use strict](https://www.w3schools.com/js/js_strict.asp)
-- [Почему typeof null === 'object'](https://habrahabr.ru/post/200664/)
-- [TC39 процесс](http://2ality.com/2015/11/tc39-process.html)
