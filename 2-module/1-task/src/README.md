@@ -10,7 +10,7 @@
 Эту функцию я вам и предлагаю написать.
 
 ```javascript
-let obj = { test: 1 };
+const obj = { test: 1 };
 
 clone(obj) !== obj; // это разные объекты
 clone(obj).test === obj.test; // но содежат одни и те же поля
