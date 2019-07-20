@@ -17,60 +17,51 @@
  */
 function SortableTable(items) {
 
-    /**
-     * @property {Element} - обязательно свойство, которое ссылается на элемент <table>
-     */
-    this.el = document.createElement('table');
+  /**
+   * @property {Element} - обязательно свойство, которое ссылается на элемент <table>
+   */
+  this.el = document.createElement('table');
 
-    let thead = document.createElement('thead');
-    let tbody = document.createElement('tbody');
+  var list = rows.map(function(i) {return (
+    '<tr><td>'+i.name+'</td><td>'+i.age+'</td><td>'+i.salary+'</td><td>'+i.city+'</td></tr>'
+  )}).join('');
 
-    thead.innerHTML = `
-         <tr>
-            <td>Name</td>
-            <td>Age</td>
-            <td>Salary</td>
-            <td>City</td>
-         </tr>
-    `;
+//var final =  '<thead><tr><td>Name</td><td>Age</td><td>Salary</td><td>City</td></tr></thead><tbody>'+list+'</tbody>'
 
-    this.el.appendChild(thead);
-    this.el.appendChild(tbody);
+  this.el.innerHTML = '<thead><tr><td>Name</td><td>Age</td><td>Salary</td><td>City</td></tr></thead><tbody>'+list+'</tbody>'
 
-    function render() {
-        tbody.innerHTML = items.map(item => {
-            let row = '';
+  /**
+   * Метод выполняет сортировку таблицы
+   * @param {number} column - номер колонки, по которой нужно выполнить сортировку (отсчет начинается от 0)
+   * @param {boolean} desc - признак того, что сортировка должна идти в обратном порядке
+   */
+  this.sort = function (column, desc = false) {
 
-            for (let key in item) {
-                row += `<td>${item[key]}</td>`;
-            }
-
-            return `<tr>${row}</tr>`;
-        }).join('');
+//console.log(column)
+    function column_name(item) {
+      if (item === 0) return 'name';
+      if (item === 2) return 'salary';
     }
 
-    /**
-     * Метод выполняет сортировку таблицы
-     * @param {number} column - номер колонки, по которой нужно выполнить сортировку (отсчет начинается от 0)
-     * @param {boolean} desc - признак того, что сортировка должна идти в обратном порядке
-     */
-    this.sort = function (column, desc = false) {
+    let  col = column_name(column)
+    // console.log(col)
 
-        items = items.sort((a, b) => {
-            let keyA = Object.keys(a)[column];
-            let keyB = Object.keys(b)[column];
+    rows.sort(function(a,b){
+      if (a[col] > b[col]) return 1;
+      if (a[col] < b[col]) return -1;
+    })
+//console.log(rows)
 
-            if (desc) {
-              return a[keyA] < b[keyB] ? 1 : -1;
-            } else {
-              return a[keyA] > b[keyB] ? 1 : -1;
-            }
+    var list = rows.map(function(i) {return (
+      '<tr><td>'+i.name+'</td><td>'+i.age+'</td><td>'+i.salary+'</td><td>'+i.city+'</td></tr>'
+    )}).join('')
 
-        });
+    var final =  '<thead><tr><td>Name</td><td>Age</td><td>Salary</td><td>City</td></tr></thead><tbody>'+list+'</tbody>'
+    this.el.innerHTML = final
+//document.querySelector('.result.table').appendChild(final)
 
-        render();
-    };
-
-    render();
+//console.log(final)
+//console.log(document.querySelector('.result').firstElementChild.innerHTML)
+  };
 }
 

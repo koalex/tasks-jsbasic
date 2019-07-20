@@ -5,7 +5,7 @@ describe("8-module-1-task", function() {
             name: 'Ilia',
             age: 25,
             salary: '1000',
-            city: 'Petrozavods'
+            city: 'Petrozavodsk'
         }]);
 
         expect(table.el.querySelectorAll('thead').length).toEqual(1);
