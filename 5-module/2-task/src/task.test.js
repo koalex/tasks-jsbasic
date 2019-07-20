@@ -5,7 +5,7 @@ describe("5-module-1-task", function() {
       name: 'Ilia',
       age: 25,
       salary: '1000',
-      city: 'Petrozavods'
+      city: 'Petrozavodsk'
     }]);
 
     expect(table.el.querySelectorAll('thead').length).toEqual(1);
@@ -32,7 +32,7 @@ describe("5-module-1-task", function() {
         name: 'Ilia',
         age: 25,
         salary: 1000,
-        city: 'Petrozavods'
+        city: 'Petrozavodsk'
       }
     ]);
 
@@ -57,7 +57,7 @@ describe("5-module-1-task", function() {
         name: 'Ilia',
         age: 25,
         salary: 1000,
-        city: 'Petrozavods'
+        city: 'Petrozavodsk'
       }
     ]);
 
@@ -83,7 +83,7 @@ describe("5-module-1-task", function() {
         name: 'Ilia',
         age: 25,
         salary: 1000,
-        city: 'Petrozavods'
+        city: 'Petrozavodsk'
       }
     ]);
 
@@ -108,7 +108,7 @@ describe("5-module-1-task", function() {
         name: 'Ilia',
         age: 25,
         salary: 100,
-        city: 'Petrozavods'
+        city: 'Petrozavodsk'
       }
     ]);
 

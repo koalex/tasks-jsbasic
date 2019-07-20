@@ -6,7 +6,7 @@ describe("6-module-1-task", function() {
             name: 'Ilia',
             age: 25,
             salary: '1000',
-            city: 'Petrozavods'
+            city: 'Petrozavodsk'
         }]);
 
         table.el.querySelector('a').dispatchEvent(new Event('click', {bubbles: true}));
@@ -19,7 +19,7 @@ describe("6-module-1-task", function() {
             name: 'Ilia',
             age: 25,
             salary: '1000',
-            city: 'Petrozavods'
+            city: 'Petrozavodsk'
         }]);
 
         table.el.querySelector('tbody tr').dispatchEvent(new Event('click', {bubbles: true}));
@@ -32,7 +32,7 @@ describe("6-module-1-task", function() {
             name: 'Ilia',
             age: 25,
             salary: '1000',
-            city: 'Petrozavods'
+            city: 'Petrozavodsk'
         };
 
         let table = new ClearedTable([ info ]);
