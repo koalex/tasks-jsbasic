@@ -3,5 +3,5 @@
  * @param {Object} obj
  * @returns {Boolean}
  */
-function isEmpty (obj) {
+function isEmpty(obj) {
 }

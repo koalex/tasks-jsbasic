@@ -6,5 +6,3 @@
  */
 function showSalary(data, age) {
 }
-
-

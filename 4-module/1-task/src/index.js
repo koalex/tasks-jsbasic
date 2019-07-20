@@ -1,9 +1,7 @@
-'use strict';
-
 /**
  * Генерация HTML списка друзей
- * @param {Friend[]} friends
+ * @param {Object[]} friends
  * @return {HTMLUListElement}
  */
-function makeFriendsList (friends) {
+function makeFriendsList(friends) {
 }

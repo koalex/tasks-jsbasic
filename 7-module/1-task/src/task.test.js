@@ -1,78 +1,86 @@
-describe("7-module-1-task", function() {
-
-    it('проверяем когда остался 1 день, 1 час', function() {
-        const el = document.createElement('div');
-
-        el.innerHTML = `
-            <div>
-                До конца акции осталось <span class="js-time-left time-left" data-from="2018.01.01 00:00:00" data-to="2018.01.02 01:00:00"></span>
-            </div>
-        `;
-
-        const timeEl = el.querySelector('.js-time-left');
-        TimeLeft.create(timeEl);
-
-        expect(timeEl.innerHTML).toEqual(`1 день, 1 час`);
-    });
-
-  it('проверяем когда осталось 10 деней', function() {
+describe('7-module-1-task', () => {
+  it('проверяем когда остался 1 день, 1 час', () => {
     const el = document.createElement('div');
 
     el.innerHTML = `
             <div>
-                До конца акции осталось <span class="js-time-left time-left" data-from="2018.01.01 00:00:00" data-to="2018.01.11 00:00:00"></span>
+                До конца акции осталось 
+                <span class="js-time-left time-left" data-from="2018.01.01 00:00:00" data-to="2018.01.02 01:00:00">
+                </span>
             </div>
         `;
 
     const timeEl = el.querySelector('.js-time-left');
     TimeLeft.create(timeEl);
 
-    expect(timeEl.innerHTML).toEqual(`10 дней`);
+    expect(timeEl.innerHTML).toEqual('1 день, 1 час');
   });
 
-  it('проверяем когда завершенно', function() {
+  it('проверяем когда осталось 10 деней', () => {
     const el = document.createElement('div');
 
     el.innerHTML = `
             <div>
-                До конца акции осталось <span class="js-time-left time-left" data-from="2018.01.01 01:00:00" data-to="2018.01.01 00:00:00"></span>
+                До конца акции осталось 
+                <span class="js-time-left time-left" data-from="2018.01.01 00:00:00" data-to="2018.01.11 00:00:00">
+                </span>
             </div>
         `;
 
     const timeEl = el.querySelector('.js-time-left');
     TimeLeft.create(timeEl);
 
-    expect(timeEl.innerHTML).toEqual(`завершенно`);
+    expect(timeEl.innerHTML).toEqual('10 дней');
   });
 
-  it('проверяем когда осталось 10 часов, 2 минуты', function() {
+  it('проверяем когда завершенно', () => {
     const el = document.createElement('div');
 
     el.innerHTML = `
             <div>
-                До конца акции осталось <span class="js-time-left time-left" data-from="2018.01.01 00:00:00" data-to="2018.01.01 10:02:00"></span>
+                До конца акции осталось 
+                <span class="js-time-left time-left" data-from="2018.01.01 01:00:00" data-to="2018.01.01 00:00:00">
+                </span>
             </div>
         `;
 
     const timeEl = el.querySelector('.js-time-left');
     TimeLeft.create(timeEl);
 
-    expect(timeEl.innerHTML).toEqual(`10 часов, 2 минуты`);
+    expect(timeEl.innerHTML).toEqual('завершенно');
   });
 
-  it('проверяем когда 2 минуты, 30 секунд', function() {
+  it('проверяем когда осталось 10 часов, 2 минуты', () => {
     const el = document.createElement('div');
 
     el.innerHTML = `
             <div>
-                До конца акции осталось <span class="js-time-left time-left" data-from="2018.01.01 00:00:00" data-to="2018.01.01 00:02:30"></span>
+                До конца акции осталось 
+                <span class="js-time-left time-left" data-from="2018.01.01 00:00:00" data-to="2018.01.01 10:02:00">  
+                </span>
             </div>
         `;
 
     const timeEl = el.querySelector('.js-time-left');
     TimeLeft.create(timeEl);
 
-    expect(timeEl.innerHTML).toEqual(`2 минуты, 30 секунд`);
+    expect(timeEl.innerHTML).toEqual('10 часов, 2 минуты');
   });
 
+  it('проверяем когда 2 минуты, 30 секунд', () => {
+    const el = document.createElement('div');
+
+    el.innerHTML = `
+            <div>
+                До конца акции осталось 
+                <span class="js-time-left time-left" data-from="2018.01.01 00:00:00" data-to="2018.01.01 00:02:30">
+                </span>
+            </div>
+        `;
+
+    const timeEl = el.querySelector('.js-time-left');
+    TimeLeft.create(timeEl);
+
+    expect(timeEl.innerHTML).toEqual('2 минуты, 30 секунд');
+  });
 });

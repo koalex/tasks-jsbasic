@@ -7,7 +7,9 @@
     "test": "test"
   },
   "scripts": {
-    "test": "karma start karma.conf.js"
+    "karma": "karma start karma.conf.js",
+    "lint": "eslint ./*-module",
+    "test": "npm run lint && npm run karma"
   },
   "repository": {
     "type": "git",
@@ -20,6 +22,9 @@
   },
   "homepage": "https://github.com/javascript-info/tasks-jsbasic#readme",
   "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.2.0",
+    "eslint-plugin-import": "^2.18.2",
     "jasmine": "^3.3.1",
     "jasmine-core": "^3.3.0",
     "karma": "^4.0.0",

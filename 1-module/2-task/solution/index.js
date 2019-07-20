@@ -1,42 +1,28 @@
-'use strict';
-
 /**
  * Эту функцию трогать не нужно
  */
-function print (text) {
-    alert(text);
+function print(text) {
+  console.log(text);
 }
 
 /**
  * Эту функцию нужно поменять так,
  * чтобы функция sayHello работала корректно
  */
-function isValid (name) {
+function isValid(name) {
+  if (!name || name.indexOf(' ') !== -1 || name.length < 4) {
+    return false;
+  }
 
-    if (!name) {
-        return false;
-    }
-
-    if (name.indexOf(' ') !== -1) {
-        return false;
-    }
-
-    if (name.length < 4) {
-        return false;
-    }
-
-    return true;
+  return true;
 }
 
-function sayHello () {
-    let userName = prompt('Введите ваше имя');
+function sayHello() {
+  const userName = prompt('Введите ваше имя');
 
-    if (isValid(userName)) {
-        print('Welcome back, ' + userName + '!');
-    } else {
-        print('Некорректное имя');
-    }
+  if (isValid(userName)) {
+    print(`Welcome back, ${userName}!`);
+  } else {
+    print('Некорректное имя');
+  }
 }
-
-sayHello();
-

@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * Компонент, который реализует сортируемую таблицу
  * @param {Array} items - данные, которые нужно отобразить
@@ -16,14 +14,13 @@
  * @constructor
  */
 function SortableTable(items) {
-
   /**
    * @property {Element} - обязательно свойство, которое ссылается на элемент <table>
    */
   this.el = document.createElement('table');
 
-  let thead = document.createElement('thead');
-  let tbody = document.createElement('tbody');
+  const thead = document.createElement('thead');
+  const tbody = document.createElement('tbody');
 
   thead.innerHTML = `
          <tr>
@@ -38,10 +35,10 @@ function SortableTable(items) {
   this.el.appendChild(tbody);
 
   function render() {
-    tbody.innerHTML = items.map(item => {
+    tbody.innerHTML = items.map((item) => {
       let row = '';
 
-      for (let key in item) {
+      for (const key in item) {
         row += `<td>${item[key]}</td>`;
       }
 
@@ -51,21 +48,20 @@ function SortableTable(items) {
 
   /**
    * Метод выполняет сортировку таблицы
-   * @param {number} column - номер колонки, по которой нужно выполнить сортировку (отсчет начинается от 0)
+   * @param {number} column - номер колонки, по которой нужно
+   *  выполнить сортировку (отсчет начинается от 0)
    * @param {boolean} desc - признак того, что сортировка должна идти в обратном порядке
    */
-  this.sort = function (column, desc = false) {
-
+  this.sort = (column, desc = false) => {
     items = items.sort((a, b) => {
-      let keyA = Object.keys(a)[column];
-      let keyB = Object.keys(b)[column];
+      const keyA = Object.keys(a)[column];
+      const keyB = Object.keys(b)[column];
 
       if (desc) {
         return a[keyA] < b[keyB] ? 1 : -1;
-      } else {
-        return a[keyA] > b[keyB] ? 1 : -1;
       }
 
+      return a[keyA] > b[keyB] ? 1 : -1;
     });
 
     render();
@@ -73,4 +69,3 @@ function SortableTable(items) {
 
   render();
 }
-

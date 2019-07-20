@@ -3,22 +3,20 @@
  * @param {Object} obj - клонируем объект
  * @returns {Object}
  */
-function clone (obj) {
-    let result = {};
+function clone(obj) {
+  const result = {};
 
-    if (typeof obj !== 'object') {
-        return obj;
+  if (typeof obj !== 'object') {
+    return obj;
+  }
+
+  for (const key in obj) {
+    if (typeof obj[key] === 'object' && obj[key] !== null) {
+      result[key] = clone(obj[key]);
+    } else {
+      result[key] = obj[key];
     }
+  }
 
-    for (let key in obj) {
-
-        if (typeof obj[key] === 'object' && obj[key] !== null) {
-            result[key] = clone(obj[key]);
-        } else {
-            result[key] = obj[key];
-        }
-
-    }
-
-    return result;
+  return result;
 }

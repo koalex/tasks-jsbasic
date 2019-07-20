@@ -1,34 +1,29 @@
-(function () {
-    'use strict';
-
-    /**
-     * Компонент, который реализует таблицу
-     * с возможностью удаления строк
-     *
-     * Пример одного элемента, описывающего строку таблицы
-     *
-     *      {
+/**
+ * Компонент, который реализует таблицу
+ * с возможностью удаления строк
+ *
+ * Пример одного элемента, описывающего строку таблицы
+ *
+ *      {
      *          name: 'Ilia',
      *          age: 25,
      *          salary: '1000',
      *          city: 'Petrozavodsk'
      *      },
-     *
-     * @constructor
-     */
-    class ClearedTable {
+ *
+ * @constructor
+ */
+class ClearedTable {
+  constructor(data) {
+    this.el = document.createElement('table');
+    this.data = data;
+  }
 
-        constructor(data) {
-            this.el = document.createElement('table');
-            this.data = data;
-        }
+  /**
+   * Метод который выщывается после удалении строки
+   * @param {number} id - идентификатор удаляемого пользователя
+   */
+  onRemoved(id) {}
+}
 
-        /**
-         * Метод который выщывается после удалении строки
-         * @param {number} id - идентификатор удаляемого пользователя
-         */
-        onRemoved(id) {}
-    }
-
-    window.ClearedTable = ClearedTable;
-})();
+window.ClearedTable = ClearedTable;
