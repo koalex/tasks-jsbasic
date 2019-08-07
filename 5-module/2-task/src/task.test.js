@@ -1,4 +1,4 @@
-describe('5-module-1-task', () => {
+describe('5-module-2-task', () => {
   it('проверям что при создании таблицы содержит корректный head', () => {
     const table = new SortableTable([{
       name: 'Ilia',
