@@ -9,5 +9,12 @@
  - [Работа с DOM из консоли](http://learn.javascript.ru/dom-console)
  - [Навигация по DOM-элементам](http://learn.javascript.ru/traversing-dom)
  - [Поиск: getElement* и querySelector* и не только](http://learn.javascript.ru/searching-elements-dom)
+ - [Свойства узлов: тип, тег и содержимое](http://learn.javascript.ru/basic-dom-node-properties)
+ - [Атрибуты и DOM-свойства](http://learn.javascript.ru/attributes-and-custom-properties)
+ - [Методы contains и compareDocumentPosition](http://learn.javascript.ru/compare-document-position)
+ - [Добавление и удаление узлов](http://learn.javascript.ru/modifying-document)
+ - [Мультивставка: insertAdjacentHTML и DocumentFragment](http://learn.javascript.ru/multi-insert)
+ - [Метод document.write](http://learn.javascript.ru/document-write)
+ - [Стили, getComputedStyle](http://learn.javascript.ru/styles-and-classes)
 
 Также, тем кто не знаком с CSS я настоятельно рекомендую почитать вот этот вот [раздел учебника](http://learn.javascript.ru/css-for-js)
