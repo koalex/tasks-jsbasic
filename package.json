@@ -9,7 +9,8 @@
   "scripts": {
     "karma": "karma start karma.conf.js",
     "lint": "eslint \"./*-module/**/*.js\"",
-    "test": "npm run lint && npm run karma"
+    "test": "npm run lint && npm run karma",
+    "serv": "static"
   },
   "repository": {
     "type": "git",
@@ -35,6 +36,7 @@
   },
   "dependencies": {
     "karma-mocha-reporter": "^2.2.5",
+    "node-static": "^0.7.11",
     "webpack": "^4.29.5",
     "webpack-cli": "^3.2.3"
   }
