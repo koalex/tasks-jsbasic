@@ -72,6 +72,7 @@
 
     <!--НЕ МЕНЯЙТЕ ПОРЯДОК ПОДКЛЮЧЕНИЯ СКРИПТОВ - ЭТО ВАЖНО ДЛЯ РАБОТЫ-->
     <script src="./6-module/2-task/src/index.js"></script>
+    <script src="./6-module/3-task/src/index.js"></script>
 
     <script>
       (function () {
@@ -95,6 +96,35 @@
           }
         ];
 
+        const menuItems = [
+          {
+            id: 'cameraphotos',
+            title: 'Camera & Photo',
+            submenu: [
+              {
+                id: 'cameraphotos_accessories',
+                title: 'Accessories',
+              }
+            ]
+          },
+          {
+            id: 'cinema',
+            title: 'Home Cinema, TV & Video',
+            submenu: [
+              {
+                id: 'cinema_audio',
+                title: 'Audio',
+              },
+              {
+                id: 'cinema_video',
+                title: 'Video',
+              }
+            ]
+          },
+
+        ];
+
+        const menu = new Menu(document.querySelector('.main-menu'), menuItems);
         const carousel = new Carousel(document.querySelector('.carousel'), slides);
 
       })();
