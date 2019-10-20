@@ -1,43 +1,114 @@
-## Сколько осталось дней до события
+## Проект, компонента ProductList:
 
-Нам часто на сайте нужно показывать сколько осталось часов, минут, секунд до какого-либо события.
-В этом задании вам предлагается сделать такой вот компонент.
+### Что нужно сделать:
+Создать класс компонеты ProductList, которая будет рисовать список товаров внутрь заданного элемента.
+Конструктор класса принимает элемент, в который он вставляет свою разметку. Массив товаров нужно получить с сервера, сделав запрос.
 
-Пример использования
+### Примерный алгоритм выполнения:
 
-```html
-<html>
-<head></head>
-<body>
-    
-    <div>
-        До конца акции осталось <span class="js-time-left time-left" data-from="2018.01.01 00:00:00" data-to="2018.01.02 01:00:00"></span>
-    </div>
-        
-    <script>
-        (function () {
-          'use strict';
-          
-          // Создаем компонент
-          let el = document.querySelector('.js-time-left');
-          TimeLeft.create(el);  
-        })();
-    </script>
-    
-</body>
-</html>
-
+- Сделать GET запрос за МАССИВОМ товаров с помощь fetch('/assets/data/products.json'); !!! Не забудьте преобразовать ответ, вызвав метод "json()". В результате этого шага вы получите массив объектов товаров
+Пример объекта для ОДНОГО товара:
+```javascript
+const product = {
+    title: 'Название товара',
+    imageUrl: '/ссылка на картинку',
+    // Свойство rating либо объект, либо null, если никто не оставил отзыв
+    rating: {
+        stars: 4, // Число от 0 до 5, количество звезд рейтинга
+        reviewsAmount: 12, // Количество отзывов на товар
+    },
+    price: '$353', // Строка с текущей ценой цена
+    oldPrice: null, // Строка со старой ценой или null, если старой цены нет. Если старая цена есть, ее нужно показать
+}
 ```
 
-После вызова `TimeLeft.create(el)` для единственного элемента на странице,
-его содержимое должно измениться на `1 день, 1 час` (разница между *data-from* и *data-to*).
+- Отрисовать разметку компоненты:
+```html
+Основа разметки всей компоненты, в которую нужно вставить список карточек:
+<div class="row justify-content-end">
+    <div class="col-lg-9">
+        <h3 class="section-title">Top Recommendations for You</h3>
+        <div class="row homepage-cards">
+            <!--ВОТ ЗДЕСЬ БУДУТ КАРТОЧКИ ТОВАРОВ-->
+        </div>
+    </div>
+</div>
+```
 
-Нужно учесть, что:
- - в зависимости от количества может меняться написание:  `1 час`, `2 минуты`, `10 часов`, `20 минут`
- - если data-from > data-to, то вместо времени нужно вывести слово `завершено`
- - если количество часов, минут или секунд равно нулю, то их не нужно выводить (например `1 час 20 секунд`)
- - самая большая единица измерения `день`, `месяц` и `год` `игнорируем`, т.е. правильным будет ответ `85 дней, 2 часа, 10 секунд`
- - все еденицы разделяются запятой
- - атрибуты data-from и data-to обязательны, если хотябы один не определен, то должно вывестись `завершено`  
+- Разметка карточки товара:
+```html
+<div class="col-md-6 col-lg-4 mb-4">
+    <div class="card">
+        <div class="card-img-wrap">
+            <img class="card-img-top" src="https://iliakan.github.io/course-project/assets/images/turntable.png" alt="Card image cap">
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Victrola Pro USB Bluetooth Turntable Vinyl to MP3 Function</h5>
+            <div class="rate">
+                <i class="icon-star checked"></i>
+                <i class="icon-star checked"></i>
+                <i class="icon-star checked"></i>
+                <i class="icon-star checked"></i>
+                <i class="icon-star checked"></i>
+                <span class="rate-amount ml-2">24</span>
+            </div>
+            <p class="card-text price-text discount"><strong>€ 129.92</strong>
+            <small class="ml-2">€ 250</small></p>
+        </div>
+    </div>
+</div>
+```
+- https://codepen.io/Dolgach/pen/EqbeEx?editors=0010 вот здесь мы уже рисовали звезды. !!! Обратите внимание на то, что там используется другой подход и другие CSS классы, просто скопировать и вставить не получится.
+- CSS Классы для звездочек
+    - "icon-star" - базовый класс, который должен быть у всех звезд
+    - "checked" - если звезда закрашена
+    - "active" - если звезда не закрашена, но активна (Активная звезда имеет желтую окантовку, неактивная - серую)
 
+* Разметка для цены имеет несколько состояний:
+Обычная цена, когда у нас нет старой цены:
+```html
+<p class="card-text price-text">
+    <strong>€ 47.31</strong>
+</p>
+```
 
+Цена, когда на товар скидка и у нас есть старая цена:
+```html
+<p class="card-text price-text discount">
+    <strong>€ 79.99</strong>
+    <small class="ml-2">€ 90.55</small>
+</p>
+```
+
+- В итоге вы получите что-то похожее:
+```html
+<div class="row justify-content-end">
+    <div class="col-lg-9">
+        <h3 class="section-title">Top Recommendations for You</h3>
+        <div class="row homepage-cards">
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-img-wrap">
+                        <img class="card-img-top" src="https://iliakan.github.io/course-project/assets/images/headphones.png" alt="Card image cap">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Nuraphone - Wireless Bluetooth Over-Ear Headphones</h5>
+                        <div class="rate">
+                            <i class="icon-star checked"></i>
+                            <i class="icon-star checked"></i>
+                            <i class="icon-star checked"></i>
+                            <i class="icon-star checked"></i>
+                            <i class="icon-star active"></i>
+                            <span class="rate-amount ml-2">24</span>
+                        </div>
+                        <p class="card-text price-text"><strong>€ 399</strong></p>
+                    </div>
+                </div>
+            </div>
+            <!--Здесь будет больше карточек, для примера только одна-->
+        </div>
+    </div>
+</div>
+```
+
+3. Втставить разметку в элемент, который передается как параметр в конструктор при создании компоненты
