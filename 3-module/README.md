@@ -1,8 +1,8 @@
-## Занятие 3: функции и методы массива ##
+## Занятие 3: Функции и массивы ##
 
 Для закрпеления нужно прочитать следующие главы:
-- [Стрелочные функции](http://javascript.info/function-expressions-arrows)
-- [Массивы: методы](http://learn.javascript.ru/array-methods)
-- [Массив: перебирающие методы](http://learn.javascript.ru/array-iteration)
-- [Псевдомассив аргументов "arguments"](http://learn.javascript.ru/arguments-pseudoarray)
+- [Function Expression и функции-стрелки](http://learn.javascript.ru/function-expressions-arrows)
+- [Методы массивов](http://learn.javascript.ru/array-methods)
+- [Остаточные параметры и оператор расширения](http://learn.javascript.ru/rest-parameters-spread-operator)
+
 

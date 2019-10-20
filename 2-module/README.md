@@ -1,9 +1,6 @@
-## Занятие 2: объекты и функции
+## Занятие 2: Объекты
 
 Главы учебника, которые нужно прочитать:
- - [Объекты как ассоциативные массивы](http://learn.javascript.ru/object)
- - [Объекты: перебор свойств](http://learn.javascript.ru/object-for-in)
- - [Объекты: передача по ссылке](http://learn.javascript.ru/object-reference)
- - [Методы объектов](http://learn.javascript.ru/object-methods)
- - [Массивы с числовыми индексами](http://learn.javascript.ru/array)
-
+- [Объекты](http://learn.javascript.ru/object)
+- [Методы объекта, "this"](http://learn.javascript.ru/object-methods)
+- [Массивы с числовыми индексами](http://learn.javascript.ru/array)

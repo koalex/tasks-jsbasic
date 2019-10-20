@@ -1,10 +1,11 @@
-## Занятие 6: ООП, this, class, extends. ##
+## Занятие 6: Компоненты: JS классы для создания множества однотипных объектов ##
 
-На занятии мы прошли классы, на дом я предлагаю почитать следующие главы
- - [Внутрений и внешний интерфейс](http://learn.javascript.ru/internal-external-interface)
- - [Преобразование объектов: toString и valueOf](http://learn.javascript.ru/object-conversion)
- - [Методы объектов, this](http://learn.javascript.ru/object-methods)
- - [Создание объектов через "new"](http://javascript.info/constructor-new) (ссылка на свежую редакцию учебника, только на англиском)
- - [Классы](https://learn.javascript.ru/es-class)
- - [Дескрипторы, геттеры и сеттеры свойств](http://learn.javascript.ru/descriptors-getters-setters)
- - [Статические и фабричные методы](http://learn.javascript.ru/static-properties-and-methods)
+На занятии мы прошли классы, на дом я предлагаю почитать следующие главы:
+- [Конструкторы, создание объектов через "new"](http://learn.javascript.ru/constructor-new)
+- [Методы объекта, "this"](http://learn.javascript.ru/object-methods)
+- [Класс: базовый синтаксис](http://learn.javascript.ru/class)
+- [Приватные и защищённые методы и свойства](http://learn.javascript.ru/private-protected-properties-methods)
+
+Дополнительное чтение:
+- [Наследование классов](http://learn.javascript.ru/class-inheritance)
+- [Генерация пользовательских событий](http://learn.javascript.ru/dispatch-events)
