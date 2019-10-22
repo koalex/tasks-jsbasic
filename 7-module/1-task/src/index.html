@@ -12,14 +12,15 @@
 </head>
 <body>
 
-    <div class="menu" style="width: 500px">
+    <div class="products">
         <div>Здесь появится разметка "Меню"</div>
     </div>
-
     <script>
         'use strict';
 
-        const menu = new Menu(document.querySelector('.menu'), items);
+        const productList = new ProductList(document.querySelector('.products'));
+
+        productList.show({id: 'top-products' });
     </script>
 </body>
 </html>

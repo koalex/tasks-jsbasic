@@ -55,7 +55,7 @@
 								>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="/checkout.html">Cart</a>
+                <a class="nav-link" href="/checkout.html">Cart</a>
 							</li>
 							<li class="nav-item">
 								<form class="form-inline my-2 my-md-0 ml-lg-5">
@@ -82,9 +82,6 @@
 					<div class="col-lg-3 main-menu">
 						<!-- Здесь будет компонента menu -->
 					</div>
-					<div class="col-lg-9 carousel">
-						<!-- Здесь будет компонента carousel -->
-					</div>
 				</div>
 			</div>
 
@@ -98,31 +95,12 @@
 		</footer>
 
 		<!--НЕ МЕНЯЙТЕ ПОРЯДОК ПОДКЛЮЧЕНИЯ СКРИПТОВ - ЭТО ВАЖНО ДЛЯ РАБОТЫ-->
-		<script src="./6-module/1-task/src/index.js"></script>
 		<script src="./6-module/2-task/src/index.js"></script>
     <script src="./7-module/1-task/src/index.js"></script>
 
 		<script>
 			(function() {
 				"use strict";
-
-				const slides = [
-					{
-						id: 0,
-						title: "BEST LAPTOP DEALS",
-						img: "./assets/images/default-slide-img.jpg"
-					},
-					{
-						id: 1,
-						title: "BEST HEADPHONES DEALS",
-						img: "./assets/images/default-slide-img.jpg"
-					},
-					{
-						id: 2,
-						title: "BEST SPEAKERS DEALS",
-						img: "./assets/images/default-slide-img.jpg"
-					}
-				];
 
 				const menuItems = [
 					{
@@ -152,11 +130,6 @@
 				];
 
 				const menu = new Menu(document.querySelector(".main-menu"), menuItems);
-				const carousel = new Carousel(
-					document.querySelector(".carousel"),
-					slides
-				);
-
         const productList = new ProductList(document.querySelector(".product-list"));
         productList.show({id: 'top-products', title: 'Top Recommendations for You' });
 			})();

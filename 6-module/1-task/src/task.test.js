@@ -1,45 +1,60 @@
 describe('6-module-1-task', () => {
-  it('проверям удаление строки', () => {
-    const table = new ClearedTable([{
-      id: 1,
-      name: 'Ilia',
-      age: 25,
-      salary: '1000',
-      city: 'Petrozavodsk',
-    }]);
+  let carousel = null;
 
-    table.el.querySelector('a').dispatchEvent(new Event('click', { bubbles: true }));
-    expect(table.el.querySelectorAll('tbody tr').length).toEqual(0);
+  beforeEach(() => {
+    const slides = [
+      {
+        id: 0,
+        title: 'BEST LAPTOP DEALS',
+        img: '../../assets/images/default-slide-img.jpg',
+      },
+      {
+        id: 1,
+        title: 'BEST HEADPHONES DEALS',
+        img: '../../assets/images/default-slide-img.jpg',
+      },
+      {
+        id: 2,
+        title: 'BEST SPEAKERS DEALS',
+        img: '../../assets/images/default-slide-img.jpg',
+      },
+    ];
+
+    carousel = new Carousel(document.createElement('div'), slides);
   });
 
-  it('проверяем, что клик работает только по <a>', () => {
-    const table = new ClearedTable([{
-      id: 1,
-      name: 'Ilia',
-      age: 25,
-      salary: '1000',
-      city: 'Petrozavodsk',
-    }]);
-
-    table.el.querySelector('tbody tr').dispatchEvent(new Event('click', { bubbles: true }));
-    expect(table.el.querySelectorAll('tbody tr').length).toEqual(1);
+  afterEach(() => {
+    carousel = null;
   });
 
-  it('провеяерм что при удалении, передаются данные об удаляемом объекте в метод onRemoved', () => {
-    const info = {
-      id: 1,
-      name: 'Ilia',
-      age: 25,
-      salary: '1000',
-      city: 'Petrozavodsk',
-    };
+  it('проверяем, что карусель содержит основные элементы', () => {
+    expect(carousel.el.querySelectorAll('.carousel-inner').length).toEqual(1);
+    expect(carousel.el.querySelectorAll('.carousel-indicator').length).toEqual(3);
+  });
 
-    const table = new ClearedTable([info]);
+  it('проверяем что при инициализации показан первый слайд (id=0)', () => {
+    expect(carousel.el.querySelector('.carousel-item.active .carousel-caption .h1').innerHTML)
+      .toEqual('BEST LAPTOP DEALS');
 
-    spyOn(table, 'onRemoved');
-    table.el.querySelector('a').dispatchEvent(new Event('click', { bubbles: true }));
+    expect(carousel.el.querySelector('.carousel-indicator[data-slide-to="0"]').classList.contains('active'))
+      .toEqual(true);
+  });
 
-    expect(table.onRemoved).toHaveBeenCalled();
-    expect(table.onRemoved).toHaveBeenCalledWith(1);
+  it('проверяем работу переключателей', () => {
+    carousel.el.querySelector('[data-slide="next"]').dispatchEvent(new Event('click', { bubbles: true }));
+    expect(carousel.el.querySelector('.carousel-item.active .carousel-caption .h1').innerHTML)
+      .toEqual('BEST HEADPHONES DEALS');
+
+    expect(carousel.el.querySelector('.carousel-indicator[data-slide-to="1"]').classList.contains('active'))
+      .toEqual(true);
+  });
+
+  it('проверяем, что если мы на первом слайде, то идти назад нельзя', () => {
+    carousel.el.querySelector('[data-slide="prev"]').dispatchEvent(new Event('click', { bubbles: true }));
+    expect(carousel.el.querySelector('.carousel-item.active .carousel-caption .h1').innerHTML)
+      .toEqual('BEST LAPTOP DEALS');
+
+    expect(carousel.el.querySelector('.carousel-indicator[data-slide-to="0"]').classList.contains('active'))
+      .toEqual(true);
   });
 });

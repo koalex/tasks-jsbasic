@@ -1,79 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>Занятие 5: Карусель</title>
+
     <meta charset="UTF-8">
-    <title>Занятие 6: Очищаемая таблица</title>
-    <link href="style.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
-    <script src="../solution/index.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="/assets/custom.css" rel="stylesheet">
+    <script src="index.js"></script>
 </head>
 <body>
-    <h1>Пример минимально необходимой структуры таблицы для прохождения тестов</h1>
-    <div class="example">
-        <table class="pure-table">
-            <thead>
-                <tr>
-                    <td>Name</td>
-                    <td>Age</td>
-                    <td>Salary</td>
-                    <td>City</td>
-                    <td></td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Ilia</td>
-                    <td>25</td>
-                    <td>1000</td>
-                    <td>Petrozavodsk</td>
-                    <td><a href="#delete">X</a></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
 
-    <h1>Результат</h1>
-    <div class="result">
-
+    <div class="carousel">
+        <div>Здесь появится разметка "Карусели"</div>
     </div>
 
     <script>
         'use strict';
 
-        let rows = [
-            {
-                id: 1,
-                name: 'Ilia',
-                age: 25,
-                salary: 1000,
-                city: 'Petrozavodsk'
-            },
-            {
-                id: 2,
-                name: 'Vasya',
-                age: 14,
-                salary: 1500,
-                city: 'Moscow'
-            },
-            {
-                id: 3,
-                name: 'Ivan',
-                age: 22,
-                salary: 100,
-                city: 'Bryansk'
-            },
-            {
-                id: 4,
-                name: 'Petya',
-                age: 45,
-                salary: 990,
-                city: 'Chita'
-            }
+        const slides = [
+          {
+            id: 0,
+            title: 'BEST LAPTOP DEALS',
+            img: '/assets/images/default-slide-img.jpg'
+          },
+          {
+            id: 1,
+            title: 'BEST HEADPHONES DEALS',
+            img: '/assets/images/default-slide-img.jpg'
+          },
+          {
+            id: 2,
+            title: 'BEST SPEAKERS DEALS',
+            img: '/assets/images/default-slide-img.jpg'
+          }
         ];
 
-        let table = new ClearedTable(rows);
-        document.querySelector('.result').appendChild(table.el);
-
+        const carousel = new Carousel(document.querySelector('.carousel'), slides);
     </script>
 </body>
 </html>

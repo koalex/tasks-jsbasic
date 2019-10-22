@@ -1,76 +1,47 @@
 describe('7-module-1-task', () => {
-  let menu = null;
+  let productList = null;
+  let oldFetch = window.fetch;
 
-  const backdrop = document.createElement('div');
-  backdrop.classList.add('backdrop');
-  document.body.appendChild(backdrop);
+  function mockFetch(data) {
+    window.fetch = function () {
+      return Promise.resolve({ json: () => Promise.resolve(data)});
+    };
+  }
 
   beforeEach(() => {
-    const items = [
-      {
-        id: 'cameraphotos',
-        title: 'Camera & Photo',
-        submenu: [
-          {
-            id: 'cameraphotos_accessories',
-            title: 'Accessories',
-          },
-        ],
-      },
-      {
-        id: 'cinema',
-        title: 'Home Cinema, TV & Video',
-        submenu: [
-          {
-            id: 'cinema_audio',
-            title: 'Audio',
-          },
-          {
-            id: 'cinema_video',
-            title: 'Video',
-          },
-        ],
-      },
 
-    ];
+    mockFetch({
+      title: 'test',
+      items: [{
+        title: 'Nuraphone - Wireless Bluetooth Over-Ear Headphones',
+        imageUrl: '/assets/images/headphones.png',
+        rating: {
+          stars: 4,
+          reviewsAmount: 24
+        },
+        price: '€ 399',
+        oldPrice: null
+      }]
+    });
 
-    menu = new Menu(document.createElement('div'), items);
+    productList = new ProductList(document.createElement('div'));
   });
 
   afterEach(() => {
-    backdrop.classList.remove('show');
-    menu = null;
+    productList = null;
+    window.fetch = oldFetch;
   });
 
-  it('проверяем, что меню содержит все пункты', () => {
-    expect(menu.el.querySelectorAll('.dropdown').length).toEqual(2);
-    expect(menu.el.querySelectorAll('.dropdown-item').length).toEqual(3);
+  it('show должен вернуть промис', () => {
+    expect(productList.show({ id: 'top-records' }) instanceof Promise).toEqual(true);
   });
 
-  it('проверяем, что при наведении на cameraphotos, покажется его подменю', () => {
-    menu.el.querySelector('.dropdown').dispatchEvent(new Event('mouseenter', { bubbles: false }));
-    expect(menu.el.querySelector('[aria-labelledby="cameraphotos"]').classList.contains('show'))
-      .toEqual(true);
-  });
+  it('проверяем отрисовку', async () => {
+    await productList.show({ id: 'top-records' });
 
-  it('проверяем, что при снятии на cameraphotos, меню спрячется', () => {
-    menu.el.querySelector('[aria-labelledby="cameraphotos"]').classList.add('show');
-    menu.el.querySelector('.dropdown').dispatchEvent(new Event('mouseleave', { bubbles: false }));
-    expect(menu.el.querySelector('[aria-labelledby="cameraphotos"]').classList.contains('show'))
-      .toEqual(false);
-  });
-
-  it('проверем, показ затемнения backdrop', () => {
-    menu.el.querySelector('.dropdown').dispatchEvent(new Event('mouseenter', { bubbles: false }));
-    expect(backdrop.classList.contains('show'))
-      .toEqual(true);
-  });
-
-  it('проверем, снятие затемнения затемнения backdrop', () => {
-    backdrop.classList.add('show');
-    menu.el.querySelector('.dropdown').dispatchEvent(new Event('mouseleave', { bubbles: false }));
-    expect(backdrop.classList.contains('show'))
-      .toEqual(false);
+    expect(productList.el.querySelector('.section-title').innerHTML).toEqual('test');
+    expect(productList.el.querySelector('.card-title').innerHTML)
+      .toEqual('Nuraphone - Wireless Bluetooth Over-Ear Headphones');
   });
 
 });

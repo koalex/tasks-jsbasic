@@ -5,4 +5,4 @@
 - [Делегирование событий](http://learn.javascript.ru/event-delegation)
 - [Действия браузера по умолчанию](http://learn.javascript.ru/default-browser-action)
 - [Основы событий мыши](http://learn.javascript.ru/mouse-events-basics)
-
+- [Генерация пользовательских событий](http://learn.javascript.ru/dispatch-events)
