@@ -485,6 +485,11 @@ form button[type="submit"]:not(.btn-send) {
     display: none;
 }
 
+.sidebar .list-group-item .dropdown-item > a {
+    color: inherit;
+    text-decoration: none;
+}
+
 .main-carousel {
     height: 277px;
     width: calc(100% + 30px);

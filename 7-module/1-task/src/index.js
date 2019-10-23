@@ -53,12 +53,10 @@ class ProductList {
 
 
     this.el.innerHTML = `
-      <div class="row justify-content-end">
-        <div class="col-lg-9">
-            <h3 class="section-title">${title}</h3>
-            <div class="row homepage-cards">
-                ${list}
-            </div>
+      <div>
+        <h3 class="section-title">${title}</h3>
+        <div class="row homepage-cards">
+            ${list}
         </div>
       </div>
     `;
