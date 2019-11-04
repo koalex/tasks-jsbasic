@@ -1,70 +1,140 @@
-## Компонент Очищаемая табилца (ClearedTable) ##
+## Проект, компонента CheckoutProductList:
 
-В модуле 5 мы делали сортируемую таблицу. Но часто нам нужно
-предоставить пользователю таблицу, из которой он смог
-бы удалять ненужные ему поля. Удалить поле значит:
- - удалить строку из таблицы
- - как-то сообщить вызывающему коду, что строка удалена
+### Что нужно сделать:
+Создать класс компонеты CheckoutProductList, которая будет рисовать список товаров внутрь заданного элемента.
+Конструктор класса принимает элемент, в который он вставляет свою разметку и массив товаров в корзине. Массив товаров нужно получить из localStorage на странице.
 
-Пример структуры:
+### Примерный алгоритм выполнения:
+
+#### 1. Базовая отрисовка компоненты 
+- Получить товары из хранилища `localStorage`: 
+```
+localStorage.getItem('cart-products');
+```
+
+- !!! Товары в [localStorage](http://learn.javascript.ru/localstorage) должны у вас появиться в результате выполнения предыдущей задачи
+- !!! Не забудьте преобразовать строку из хранилища с помощью `JSON.parse`. В результате этого шага вы получите массив объектов товаров
+
+- Пример объекта для ОДНОГО товара:
 ```javascript
-let rows = [
-    {
-        id: 1,
-        name: 'Ilia',
-        age: 25,
-        salary: 1000,
-        city: 'Petrozavodsk'
+const product = {
+    id: 1, // Уникальный идентификатор товара
+    title: 'Название товара',
+    imageUrl: '/ссылка на картинку',
+    // Свойство rating либо объект, либо null, если никто не оставил отзыв
+    rating: {
+        stars: 4, // Число от 0 до 5, количество звезд рейтинга
+        reviewsAmount: 12, // Количество отзывов на товар
     },
-    {
-        id: 2,
-        name: 'Vasya',
-        age: 14,
-        salary: 1500,
-        city: 'Moscow'
-    }
-];
-```
-
-Для успешного прохождения тестов, вам нужно поддержать следующую структуру в html:
-```html
-<table>
-    <thead>
-        <tr>
-            <td>Name</td>
-            <td>Age</td>
-            <td>Salary</td>
-            <td>City</td>
-            <td></td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>Ilia</td>
-            <td>25</td>
-            <td>1000</td>
-            <td>Petrozavodsk</td>
-            <td><a>X</a></td>
-        </tr>
-        ...
-    </tbody>
-</table>
-```
-
-Данный компонент предполагается использовать следующим образом:
-```javascript
-let table = new ClearedTable(rows);
-document.querySelector('.result').appendChild(table.el);
-
-table.onRemoved = function (id) {
-    console.log(`Из таблицы удален пользователь ${id}`);
+    price: '$353', // Строка с текущей ценой цена
+    oldPrice: null, // Строка со старой ценой или null, если старой цены нет. Если старая цена есть, ее нужно показать
 }
 ```
-При клике на <a>X</a>, ожидается что строка будет удалена и метод *onRemoved*
-будет вызван с идентификатором удаленного пользователя.
 
-Для решения этой задачи рекомендуется почитать вот эту вот главу из учебника
-http://learn.javascript.ru/behavior
+- Отрисовать разметку компоненты:
+```html
+Основа разметки всей компоненты, в которую нужно вставить список карточек:
+<div class="product-list-box">
+    <!--ВОТ ЗДЕСЬ БУДУТ КАРТОЧКИ ТОВАРОВ-->
+</div>
+```
 
-PS для красоты я добавил стили [PureCss](https://purecss.io/). Для применениях их
-к таблице, нужно к элементу table добавить класс "pure-table".
+- Разметка карточки товара:
+```html
+<div class="box-inner-col description-col">
+  
+  <div class="product-img">
+    <img src="assets/images/canon1.png" alt="img">
+  </div>
+  
+  <div class="product-desc">
+    <h4 class="col-title mb-2">Canon EOS 200D Digital SLR Camera</h4>
+    <div class="rate">
+      <i class="icon-star checked"></i>
+      <i class="icon-star checked"></i>
+      <i class="icon-star checked"></i>
+      <i class="icon-star checked"></i>
+      <i class="icon-star checked"></i>
+      <span class="rate-amount ml-2 d-inline-block d-md-none">121</span>
+    </div>
+    <p class="rate-amount d-none d-md-block mt-1">11 reviews</p>
+    
+    <p class="price-text mb-0 mt-2 d-inline-block d-md-none">
+      <strong>€ 47.31</strong>
+    </p>
+  </div>
+  
+  <div class="product-remove-button-wrapper">
+    <button type="button"
+            data-button-role="checkout-remove-product"
+            class="product-remove-button">
+      X
+    </button>
+  </div>
+
+</div>
+```
+
+
+- https://codepen.io/Dolgach/pen/EqbeEx?editors=0010 вот здесь мы уже рисовали звезды. 
+- !!! Обратите внимание на то, что там используется другой подход и другие CSS классы, просто скопировать и вставить не получится.
+- Также мы уже рисовали список товаров, но с другой версткой, можно переиспользовать основной JS код
+- CSS Классы для звездочек
+    - "icon-star" - базовый класс, который должен быть у всех звезд
+    - "checked" - если звезда закрашена
+    - тег для звездочки стоит использовать `<i></i>`
+
+- В итоге вы получите что-то похожее:
+```html
+<div class="product-list-box">
+    <div class="box-inner-col description-col">
+      
+      <div class="product-img">
+        <img src="assets/images/canon1.png" alt="img">
+      </div>
+      
+      <div class="product-desc">
+        <h4 class="col-title mb-2">Canon EOS 200D Digital SLR Camera</h4>
+        <div class="rate">
+          <i class="icon-star checked"></i>
+          <i class="icon-star checked"></i>
+          <i class="icon-star checked"></i>
+          <i class="icon-star checked"></i>
+          <i class="icon-star checked"></i>
+          <span class="rate-amount ml-2 d-inline-block d-md-none">121</span>
+        </div>
+        <p class="rate-amount d-none d-md-block mt-1">11 reviews</p>
+        
+        <p class="price-text mb-0 mt-2 d-inline-block d-md-none">
+          <strong>€ 47.31</strong>
+        </p>
+      </div>
+    
+      <div class="product-remove-button-wrapper">
+        <button type="button"
+                data-button-role="checkout-remove-product"
+                class="product-remove-button">
+          X
+        </button>
+      </div>
+    </div>
+</div>
+```
+
+- Втставить разметку в элемент, который передается как параметр в конструктор при создании компоненты.
+  - `product-list-box-wrapper` - класс пустого элемента внутрь которого нужно вставлять нашу компоненту.
+
+#### 2. Удаление товара из корзины
+
+У каждого товара справа есть кнопка для удаления этого товара из корзины. 
+В этом пункте вы реализуете процесс удаления.
+
+- Т.к. товаров в корзине может быть любое количество, 
+рекомендуется использовать прием [Делегирование событий](http://learn.javascript.ru/event-delegation);
+Т.е. навесить только один обработчик на родительский элемент.
+  -  `product-list-box` - CSS класс родительского элемента
+  - `data-button-role="checkout-remove-product"` - дата-атрибут на кнопке удаления
+- Перед удалением элемента со страницы, рекомендуется переспросить у пользователя с помощью встроенной функции
+`confirm('Вы уверенны, что хотите удалить этот товар из корзины?')`
+- После удаления, нужно записать новый список товаров в `localStorage`. Это важно для следующей компоненты.
+  
