@@ -1,138 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<title>Проект</title>
+  <head>
+    <title>Проект</title>
 
-		<meta charset="UTF-8" />
-		<meta
-			name="viewport"
-			content="width=device-width, initial-scale=1, shrink-to-fit=no"
-		/>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
 
-		<link
-			rel="stylesheet"
-			href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-			integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-			crossorigin="anonymous"
-		/>
-		<link href="./assets/custom.css" type="text/css" rel="stylesheet" />
-	</head>
-	<body>
-		<header>
-			<nav class="navbar navbar-expand-lg navbar-light">
-				<div class="container">
-					<div>
-						<button
-							class="navbar-toggler d-none d-md-inline-flex d-lg-none"
-							type="button"
-							data-toggle="collapse"
-							data-target="#navbarsExample07"
-							aria-controls="navbarsExample07"
-							aria-expanded="false"
-							aria-label="Toggle navigation"
-						>
-							<img src="./assets/icons/icon-menu.svg" alt="menu icon" />
-						</button>
-						<button
-							class="navbar-toggler d-inline-flex d-md-none has-messages"
-							type="button"
-							data-toggle="modal"
-							data-target="#xsMenuModal"
-						>
-							<img src="./assets/icons/icon-menu.svg" alt="menu icon" />
-						</button>
-						<a class="navbar-brand" href="/"><strong>AnyShop</strong></a>
-					</div>
-					<a href="#" class="mobile-search-menu-icon"
-						><img src="./assets/icons/icon-search.svg" alt="menu icon"
-					/></a>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <link href="./assets/custom.css" type="text/css" rel="stylesheet" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+          <div>
+            <button
+              class="navbar-toggler d-none d-md-inline-flex d-lg-none"
+              type="button"
+              data-toggle="collapse"
+              data-target="#navbarsExample07"
+              aria-controls="navbarsExample07"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <img src="./assets/icons/icon-menu.svg" alt="menu icon" />
+            </button>
+            <button
+              class="navbar-toggler d-inline-flex d-md-none has-messages"
+              type="button"
+              data-toggle="modal"
+              data-target="#xsMenuModal"
+            >
+              <img src="./assets/icons/icon-menu.svg" alt="menu icon" />
+            </button>
+            <a class="navbar-brand" href="/"><strong>AnyShop</strong></a>
+          </div>
+          <a href="#" class="mobile-search-menu-icon"
+            ><img src="./assets/icons/icon-search.svg" alt="menu icon"
+          /></a>
 
-					<div class="collapse navbar-collapse" id="navbarsExample07">
-						<ul class="navbar-nav mr-auto">
-							<li class="nav-item active">
-								<a class="nav-link" href="#"
-									>Sales <span class="sr-only">(current)</span></a
-								>
-							</li>
-							<li class="nav-item">
+          <div class="collapse navbar-collapse" id="navbarsExample07">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="#"
+                  >Sales <span class="sr-only">(current)</span></a
+                >
+              </li>
+              <li class="nav-item">
                 <a class="nav-link" href="/checkout.html">Cart</a>
-							</li>
-							<li class="nav-item">
-								<form class="form-inline my-2 my-md-0 ml-lg-5">
-									<input
-										class="form-control mr-sm-2"
-										type="text"
-										placeholder="Search"
-										aria-label="Search"
-									/>
-									<button type="submit" class="btn btn-outline-primary">
-										Search
-									</button>
-								</form>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</nav>
-		</header>
-		<main role="main">
-			<div class="backdrop"></div>
-			<div class="container">
-				<div class="row flex-column-reverse flex-lg-row">
-					<div class="col-lg-3 main-menu">
-						<!-- Здесь будет компонента menu -->
-					</div>
-				</div>
-			</div>
+              </li>
+              <li class="nav-item">
+                <form class="form-inline my-2 my-md-0 ml-lg-5">
+                  <input
+                    class="form-control mr-sm-2"
+                    type="text"
+                    placeholder="Search"
+                    aria-label="Search"
+                  />
+                  <button type="submit" class="btn btn-outline-primary">
+                    Search
+                  </button>
+                </form>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main role="main">
+      <div class="backdrop"></div>
+      <div class="container">
+        <div class="row flex-column-reverse flex-lg-row">
+          <div class="col-lg-3 main-menu">
+            <!-- Здесь будет компонента menu -->
+          </div>
+          <div class="col-lg-9">
+            <div class="product-list">
+              <!-- Здесь будет компонента списка продуктов -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
 
-			<div class="container product-list">
-				<!-- Здесь будет компонента списка продуктов -->
-			</div>
-		</main>
+    <footer class="footer">
+      <!-- Здесь будет компонента footer -->
+    </footer>
 
-		<footer class="footer">
-			<!-- Здесь будет компонента footer -->
-		</footer>
-
-		<!--НЕ МЕНЯЙТЕ ПОРЯДОК ПОДКЛЮЧЕНИЯ СКРИПТОВ - ЭТО ВАЖНО ДЛЯ РАБОТЫ-->
-		<script src="./6-module/2-task/src/index.js"></script>
+    <!--НЕ МЕНЯЙТЕ ПОРЯДОК ПОДКЛЮЧЕНИЯ СКРИПТОВ - ЭТО ВАЖНО ДЛЯ РАБОТЫ-->
+    <script src="./6-module/2-task/src/index.js"></script>
     <script src="./7-module/1-task/src/index.js"></script>
 
-		<script>
-			(function() {
-				"use strict";
+    <script>
+      (function() {
+        "use strict";
 
-				const menuItems = [
-					{
-						id: "cameraphotos",
-						title: "Camera & Photo",
-						submenu: [
-							{
-								id: "cameraphotos_accessories",
-								title: "Accessories"
-							}
-						]
-					},
-					{
-						id: "cinema",
-						title: "Home Cinema, TV & Video",
-						submenu: [
-							{
-								id: "cinema_audio",
-								title: "Audio"
-							},
-							{
-								id: "cinema_video",
-								title: "Video"
-							}
-						]
-					}
-				];
+        const menuItems = [
+          {
+            id: "cameraphotos",
+            title: "Camera & Photo",
+            submenu: [
+              {
+                id: "cameraphotos_accessories",
+                title: "Accessories"
+              }
+            ]
+          },
+          {
+            id: "cinema",
+            title: "Home Cinema, TV & Video",
+            submenu: [
+              {
+                id: "cinema_audio",
+                title: "Audio"
+              },
+              {
+                id: "cinema_video",
+                title: "Video"
+              }
+            ]
+          }
+        ];
 
-				const menu = new Menu(document.querySelector(".main-menu"), menuItems);
-        const productList = new ProductList(document.querySelector(".product-list"));
-        productList.show({id: 'top-products', title: 'Top Recommendations for You' });
-			})();
-		</script>
-	</body>
+        const menu = new Menu(document.querySelector(".main-menu"), menuItems);
+        const productList = new ProductList(
+          document.querySelector(".product-list")
+        );
+        productList.show({
+          id: "top-products",
+          title: "Top Recommendations for You"
+        });
+      })();
+    </script>
+  </body>
 </html>
