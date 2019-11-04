@@ -1,79 +1,131 @@
-/**
- * Компонент, который реализует таблицу
- * с возможностью удаления строк
- *
- * Пример одного элемента, описывающего строку таблицы
- *
- *      {
-     *          name: 'Ilia',
-     *          age: 25,
-     *          salary: '1000',
-     *          city: 'Petrozavodsk'
-     *      },
- *
- * @constructor
- */
-class ClearedTable {
-  constructor(data) {
-    this.el = document.createElement('table');
-    this.data = data;
+'use strict';
 
-    const thead = document.createElement('thead');
-    const tbody = document.createElement('tbody');
+class CheckoutProductList {
+  productsStoreKey = 'cart-products';
 
-    this.el.classList.toggle('pure-table');
-
-    thead.innerHTML = `
-             <tr>
-                <td>Name</td>
-                <td>Age</td>
-                <td>Salary</td>
-                <td>City</td>
-                <td></td>
-             </tr>
-        `;
-
-    tbody.innerHTML = data.map((item) => {
-      let row = '';
-
-      for (const key in item) {
-        if (key !== 'id') {
-          row += `<td>${item[key]}</td>`;
-        }
-      }
-
-      return `<tr>
-            ${row}
-            <td data-id="${item.id}"><a href="#delete">X</a></td>
-        </tr>`;
-    }).join('');
-
-    this.el.appendChild(thead);
-    this.el.appendChild(tbody);
-
-    this.el.addEventListener('click', event => this.onClick(event));
+  constructor(parentElement) {
+    this.render(parentElement);
   }
 
-  onClick(event) {
-    if (!(event.target instanceof HTMLAnchorElement)) {
+  render(parentElement) {
+    let productListJSON = localStorage.getItem(this.productsStoreKey);
+    let productList = JSON.parse(productListJSON) || [];
+
+    let products = productList
+      .map((product) => this._generateProduct(product))
+      .join('');
+
+    parentElement.innerHTML = `
+      <div class="product-list-box">
+          ${products}
+      </div>
+    `;
+
+    let productListElement = parentElement.querySelector('.product-list-box');
+
+    productListElement.addEventListener('click', (event) => this.onListClick(event, productList));
+  }
+
+  onListClick(event, productList) {
+    let target = event.target;
+    let isRemove = target.dataset.buttonRole === 'checkout-remove-product';
+
+    if (!isRemove) {
       return;
     }
 
-    event.preventDefault();
+    let isConfirmed = confirm('Вы уверенны, что хотите удалить этот товар из корзины?');
+    if (isConfirmed) {
+      let parent = target.closest('.product-wrapper');
+      let removeProductId = parseInt(parent.dataset.productId, 10);
 
-    const tr = event.target.closest('tr');
-    const id = tr.querySelector('[data-id]').getAttribute('data-id');
-
-    tr.remove();
-
-    this.onRemoved(parseInt(id, 10));
+      let filteredProductList = productList
+        .filter((product) => product.id !== removeProductId);
+      let filteredProductListJSON = JSON.stringify(filteredProductList);
+      localStorage.setItem(this.productsStoreKey, filteredProductListJSON);
+      parent.remove();
+    }
   }
 
-  /**
-   * Метод который выщывается после удалении строки
-   * @param {number} id - идентификатор удаляемого пользователя
-   */
-  onRemoved(id) {}
+  _generateProduct(product) {
+    let allStarsHTML = this._generateStars(product.rating);
+    let ratingReviewsHTML = this._generateReviewsAmount(product.rating);
+
+    return `
+
+    <div data-product-id="${product.id}" class="product-wrapper box-inner-col description-col">
+  
+      <div class="product-image">
+        <img src="${product.imageUrl}" alt="img">
+      </div>
+      
+      <div class="product-description">
+        <h4 class="col-title mb-2">${product.title}</h4>
+        <div class="rate">
+          ${allStarsHTML}
+        </div>
+        ${ratingReviewsHTML}
+        
+        <p class="price-text mb-0 mt-2 d-inline-block d-md-none">
+          <strong>${product.price}</strong>
+        </p>
+      </div>
+      
+      <div class="product-price">
+          <p class="mb-0 font-weight-light">Price:</p>
+          <h4 class="col-title price-text mb-2">${product.price}</h4>
+      </div>
+      
+      <div class="product-remove-button-wrapper">
+        <button type="button"
+                data-button-role="checkout-remove-product"
+                class="product-remove-button">
+          X
+        </button>
+      </div>
+      
+      </div>
+    `;
+
+  }
+
+  _generateReviewsAmount(productRating) {
+    if (productRating) {
+      return `
+            <p class="rate-amount d-none d-md-block mt-1">
+                ${productRating.reviewsAmount} reviews
+            </p>
+      `;
+    }
+
+    return '';
+  }
+
+  _generateStars(productRating) {
+    let ratingStarsCount;
+    if (productRating) {
+      ratingStarsCount = productRating.stars;
+    } else {
+      ratingStarsCount = 0;
+    }
+
+    let allStarsHTML = '';
+    let maximumStarsCount = 5;
+    let star = '<i class="icon-star"></i>';
+    let starChecked = '<i class="icon-star checked"></i>';
+
+    for (let i = 0; i < maximumStarsCount; i++) {
+      if (ratingStarsCount === 0) {
+        allStarsHTML += star;
+      } else {
+        allStarsHTML += starChecked;
+        ratingStarsCount--;
+      }
+    }
+
+    return allStarsHTML;
+  }
 }
 
-window.ClearedTable = ClearedTable;
+
+
