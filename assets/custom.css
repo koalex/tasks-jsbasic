@@ -835,19 +835,25 @@ form button[type="submit"]:not(.btn-send) {
 
 /* Styles for product on checkout page BEGIN*/
 .product-wrapper {
+  width: 100%;
   border-bottom: 1px solid #CCCCCC;
 }
 
-.product-image {
+.product-image-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 250px;
+  width: 40%;
   padding: 1rem;
 }
 
+.product-image {
+  max-width: 100%;
+  height: auto;
+}
+
 .product-description {
-  width: 60%;
+  width: 20%;
   padding: 20px;
 }
 

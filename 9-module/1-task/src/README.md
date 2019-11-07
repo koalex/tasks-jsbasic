@@ -41,13 +41,13 @@ const product = {
 
 - Разметка карточки товара:
 ```html
-<div class="box-inner-col description-col">
+<div data-product-id="1" class="product-wrapper box-inner-col description-col">
   
-  <div class="product-img">
-    <img src="assets/images/canon1.png" alt="img">
+  <div class="product-image-container">
+    <img class="product-image" src="assets/images/canon1.png" alt="img">
   </div>
   
-  <div class="product-desc">
+  <div class="product-description">
     <h4 class="col-title mb-2">Canon EOS 200D Digital SLR Camera</h4>
     <div class="rate">
       <i class="icon-star checked"></i>
@@ -55,13 +55,13 @@ const product = {
       <i class="icon-star checked"></i>
       <i class="icon-star checked"></i>
       <i class="icon-star checked"></i>
-      <span class="rate-amount ml-2 d-inline-block d-md-none">121</span>
     </div>
     <p class="rate-amount d-none d-md-block mt-1">11 reviews</p>
-    
-    <p class="price-text mb-0 mt-2 d-inline-block d-md-none">
-      <strong>€ 47.31</strong>
-    </p>
+  </div>
+  
+  <div class="product-price">
+    <p class="mb-0 font-weight-light">Price:</p>
+    <h4 class="col-title price-text mb-2">${product.price}</h4>
   </div>
   
   <div class="product-remove-button-wrapper">
@@ -87,13 +87,13 @@ const product = {
 - В итоге вы получите что-то похожее:
 ```html
 <div class="product-list-box">
-    <div class="box-inner-col description-col">
+    <div class="product-wrapper box-inner-col description-col">
       
-      <div class="product-img">
-        <img src="assets/images/canon1.png" alt="img">
+      <div class="product-image-container">
+        <img class="product-image" src="assets/images/canon1.png" alt="img">
       </div>
       
-      <div class="product-desc">
+      <div class="product-description">
         <h4 class="col-title mb-2">Canon EOS 200D Digital SLR Camera</h4>
         <div class="rate">
           <i class="icon-star checked"></i>
@@ -101,15 +101,15 @@ const product = {
           <i class="icon-star checked"></i>
           <i class="icon-star checked"></i>
           <i class="icon-star checked"></i>
-          <span class="rate-amount ml-2 d-inline-block d-md-none">121</span>
         </div>
         <p class="rate-amount d-none d-md-block mt-1">11 reviews</p>
-        
-        <p class="price-text mb-0 mt-2 d-inline-block d-md-none">
-          <strong>€ 47.31</strong>
-        </p>
       </div>
-    
+      
+      <div class="product-price">
+        <p class="mb-0 font-weight-light">Price:</p>
+        <h4 class="col-title price-text mb-2">${product.price}</h4>
+      </div>
+      
       <div class="product-remove-button-wrapper">
         <button type="button"
                 data-button-role="checkout-remove-product"
@@ -117,6 +117,7 @@ const product = {
           X
         </button>
       </div>
+    
     </div>
 </div>
 ```

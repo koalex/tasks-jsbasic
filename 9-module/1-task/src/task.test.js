@@ -1,45 +1,163 @@
 describe('9-module-1-task', () => {
-  it('проверям удаление строки', () => {
-    const table = new ClearedTable([{
-      id: 1,
-      name: 'Ilia',
-      age: 25,
-      salary: '1000',
-      city: 'Petrozavodsk',
-    }]);
+  let parentElement;
+  let products;
 
-    table.el.querySelector('a').dispatchEvent(new Event('click', { bubbles: true }));
-    expect(table.el.querySelectorAll('tbody tr').length).toEqual(0);
+  beforeEach(() => {
+    products = [
+      {
+        id: 1,
+        title: 'Nuraphone - Wireless Bluetooth Over-Ear Headphones',
+        imageUrl: '/assets/images/headphones.png',
+        rating: {
+          stars: 4,
+          reviewsAmount: 24
+        },
+        price: '€ 399',
+        oldPrice: null
+      },
+      {
+        id: 2,
+        title: 'Homido Virtual Reality Headset for Smartphone',
+        imageUrl: '/assets/images/headset.png',
+        rating: {
+          stars: 5,
+          reviewsAmount: 121
+        },
+        price: '€ 47.31',
+        oldPrice: null
+      },
+      {
+        id: 3,
+        title: 'Victrola Pro USB Bluetooth Turntable Vinyl to MP3 Function',
+        imageUrl: '/assets/images/turntable.png',
+        rating: {
+          stars: 5,
+          reviewsAmount: 24
+        },
+        price: '€ 129.92',
+        oldPrice: '€ 250'
+      },
+      {
+        id: 4,
+        title: 'Zolo Liberty Bluetooth Headphones',
+        imageUrl: '/assets/images/bluetooth-headphones.png',
+        rating: null,
+        price: '€ 79.99',
+        oldPrice: '€ 90.55'
+      },
+      {
+        id: 5,
+        title: 'Libratone Zipp Wireless Speaker',
+        imageUrl: '/assets/images/speaker.png',
+        rating: {
+          stars: 5,
+          reviewsAmount: 11
+        },
+        price: '€ 205.98',
+        oldPrice: null
+      },
+      {
+        id: 6,
+        title: 'Mikme Microphone, Black',
+        imageUrl: '/assets/images/microphone.png',
+        rating: {
+          stars: 4,
+          reviewsAmount: 14
+        },
+        price: '€ 299.00',
+        oldPrice: null
+      }
+    ];
+
+    const productsJSON = JSON.stringify(products);
+    localStorage.setItem('cart-products', productsJSON);
+
+    parentElement = document.createElement('div');
+
+    new CheckoutProductList(parentElement);
   });
 
-  it('проверяем, что клик работает только по <a>', () => {
-    const table = new ClearedTable([{
-      id: 1,
-      name: 'Ilia',
-      age: 25,
-      salary: '1000',
-      city: 'Petrozavodsk',
-    }]);
+  it('должна рисовать 6 продуктов с правильным базовым классом', function () {
+    let productElements = parentElement.querySelectorAll('.product-wrapper');
 
-    table.el.querySelector('tbody tr').dispatchEvent(new Event('click', { bubbles: true }));
-    expect(table.el.querySelectorAll('tbody tr').length).toEqual(1);
+    expect(productElements.length).toBe(6);
   });
 
-  it('провеяерм что при удалении, передаются данные об удаляемом объекте в метод onRemoved', () => {
-    const info = {
-      id: 1,
-      name: 'Ilia',
-      age: 25,
-      salary: '1000',
-      city: 'Petrozavodsk',
-    };
+  it('должна добавлять правильное название у продукта', function () {
+    let productElements = parentElement.querySelectorAll('.product-wrapper');
+    let secondProductElement = productElements[1];
+    let secondProduct = products[1];
 
-    const table = new ClearedTable([info]);
+    let secondProductElementNameElement = secondProductElement
+      .querySelector('.product-description .col-title');
+    let nameFromHTML = secondProductElementNameElement ?
+      secondProductElementNameElement.innerHTML.trim() : '';
+    let productName = secondProduct.title;
 
-    spyOn(table, 'onRemoved');
-    table.el.querySelector('a').dispatchEvent(new Event('click', { bubbles: true }));
-
-    expect(table.onRemoved).toHaveBeenCalled();
-    expect(table.onRemoved).toHaveBeenCalledWith(1);
+    expect(nameFromHTML).toEqual(productName);
   });
+
+  describe('удаление', () => {
+    it('должна удалять товар из верстки', function () {
+      spyOn(window, 'confirm').and.returnValue(true);
+
+      let productElements = parentElement.querySelectorAll('.product-wrapper');
+      let productElement = productElements[3];
+      let product = products[3];
+      let productElementRemoveButton = productElement
+        .querySelector('.product-remove-button');
+
+      productElementRemoveButton
+        .dispatchEvent(new MouseEvent('click', { bubbles: true }));
+
+      let productElementsAfterRemove = parentElement.querySelectorAll('.product-wrapper');
+      let isProductElementRemoved = ![...productElementsAfterRemove].some((element) => {
+        return parseInt(element.dataset.productId, 10) === product.id;
+      });
+
+      expect(isProductElementRemoved).toBe(true);
+    });
+
+    it('не должна удалять товар если пользователь отменил удаление', function () {
+      spyOn(window, 'confirm').and.returnValue(false);
+
+      let productElements = parentElement.querySelectorAll('.product-wrapper');
+      let productElement = productElements[3];
+      let product = products[3];
+      let productElementRemoveButton = productElement
+        .querySelector('.product-remove-button');
+
+      productElementRemoveButton
+        .dispatchEvent(new MouseEvent('click', { bubbles: true }));
+
+      let productElementsAfterRemove = parentElement.querySelectorAll('.product-wrapper');
+      let isProductElementRemoved = ![...productElementsAfterRemove].some((element) => {
+        return parseInt(element.dataset.productId, 10) === product.id;
+      });
+
+      expect(isProductElementRemoved).toBe(false);
+    });
+
+    it('должна удалять товар из хранилища', function () {
+      spyOn(window, 'confirm').and.returnValue(true);
+
+      let productElements = parentElement.querySelectorAll('.product-wrapper');
+      let productElement = productElements[3];
+      let product = products[3];
+      let productElementRemoveButton = productElement
+        .querySelector('.product-remove-button');
+
+      productElementRemoveButton
+        .dispatchEvent(new MouseEvent('click', { bubbles: true }));
+
+      let productsFromStorageJSON = localStorage.getItem('cart-products');
+      let productsFromStorage = JSON.parse(productsFromStorageJSON);
+      let isProductFromStorageRemoved = !productsFromStorage.some((productsFromStorage) => {
+        return productsFromStorage.id === product.id;
+      });
+
+      expect(isProductFromStorageRemoved).toBe(true);
+    });
+  });
+
 });
