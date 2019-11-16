@@ -13,6 +13,7 @@ describe('7-module-1-task', () => {
     mockFetch({
       title: 'test',
       items: [{
+        id: 1,
         title: 'Nuraphone - Wireless Bluetooth Over-Ear Headphones',
         imageUrl: '/assets/images/headphones.png',
         rating: {

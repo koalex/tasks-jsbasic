@@ -2,6 +2,7 @@
   "title": "Top Recommendations for You",
   "items": [
     {
+      "id": 1,
       "title": "Nuraphone - Wireless Bluetooth Over-Ear Headphones",
       "imageUrl": "/assets/images/headphones.png",
       "rating": {
@@ -12,6 +13,7 @@
       "oldPrice": null
     },
     {
+      "id": 2,
       "title": "Homido Virtual Reality Headset for Smartphone",
       "imageUrl": "/assets/images/headset.png",
       "rating": {
@@ -22,6 +24,7 @@
       "oldPrice": null
     },
     {
+      "id": 3,
       "title": "Victrola Pro USB Bluetooth Turntable Vinyl to MP3 Function",
       "imageUrl": "/assets/images/turntable.png",
       "rating": {
@@ -32,6 +35,7 @@
       "oldPrice": "€ 250"
     },
     {
+      "id": 4,
       "title": "Zolo Liberty Bluetooth Headphones",
       "imageUrl": "/assets/images/bluetooth-headphones.png",
       "rating": null,
@@ -39,6 +43,7 @@
       "oldPrice": "€ 90.55"
     },
     {
+      "id": 5,
       "title": "Libratone Zipp Wireless Speaker",
       "imageUrl": "/assets/images/speaker.png",
       "rating": {
@@ -49,6 +54,7 @@
       "oldPrice": null
     },
     {
+      "id": 6,
       "title": "Mikme Microphone, Black",
       "imageUrl": "/assets/images/microphone.png",
       "rating": {
