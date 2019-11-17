@@ -1,20 +1,23 @@
 class Carousel {
-  /**
-   * Компонент "Карусель"
-   * @param {Element} element - корневой элемент, в который будет вставлен компонент карусели
-   * @param {Array<Object>} slides - массив слайдов, которые нужно отрисовать.
-   * @example пример структуры одного слайда
-   *   [
-   *   ...
-   *   {
-   *        id: 0,
-   *        title: 'BEST LAPTOP DEALS',
-   *        img: 'ссылка на фоновую картинку слайда'
-   *   },
-   *   ... ]
-   */
-  constructor(element, slides) {
-    this.slides = slides;
+  slides = [
+    {
+      id: 0,
+      title: 'BEST LAPTOP DEALS',
+      img: './assets/images/default-slide-img.jpg'
+    },
+    {
+      id: 1,
+      title: 'BEST HEADPHONES DEALS',
+      img: './assets/images/default-slide-img.jpg'
+    },
+    {
+      id: 2,
+      title: 'BEST SPEAKERS DEALS',
+      img: './assets/images/default-slide-img.jpg'
+    }
+  ];
+
+  constructor(element) {
     this.el = element;
 
     this.render();
@@ -28,31 +31,81 @@ class Carousel {
   }
 
   onClick(event) {
-    const el = event.target.closest('[role="button"]');
-    let newSlideIndex = null;
+    let target = event.target;
+    const controlButton = target.closest('[role="button"]');
+    const isIndicatorButton = !!target.dataset.slideTo;
 
-    if (el.dataset.slide === 'prev') {
-      newSlideIndex = this.activeSlide - 1;
-    } else if (el.dataset.slide === 'next') {
-      newSlideIndex = this.activeSlide + 1;
+    if (controlButton) {
+      this._onControlButtonClick(controlButton);
+      return;
     }
 
-    if (newSlideIndex !== null) {
-      this.showSlide(newSlideIndex);
+    if (isIndicatorButton) {
+      this._onIndicatorClick(target);
     }
   }
 
+  _onControlButtonClick(controlButton) {
+    const activeSlideId = this.activeSlide;
+    const slideTo = controlButton.dataset.slide;
+
+    if (slideTo === 'next') {
+      this._onNextButtonClick(activeSlideId);
+    }
+
+    if (slideTo === 'prev') {
+      this._onPreviousButtonClick(activeSlideId);
+    }
+  }
+
+  _onIndicatorClick(target) {
+    const slideTo = parseInt(target.dataset.slideTo, 10);
+    this.showSlide(slideTo);
+  }
+
+  _onNextButtonClick(activeSlideId) {
+    const isLastSlide = !this.slides[activeSlideId + 1];
+    let newSlideId;
+
+    if (isLastSlide) {
+      newSlideId = 0;
+    } else {
+      newSlideId = activeSlideId + 1;
+    }
+
+    this.showSlide(newSlideId);
+  }
+
+  _onPreviousButtonClick(activeSlideId) {
+    const isFirstSlide = !this.slides[activeSlideId - 1];
+    let newSlideId;
+
+    if (isFirstSlide) {
+      newSlideId = this.slides.length - 1;
+    } else {
+      newSlideId = activeSlideId - 1;
+    }
+
+    this.showSlide(newSlideId);
+  }
+
+
   /**
-   * Функция, которая отвечает за отрисовку компонента
+   * Функция, которая отвечает за отрисовку компоненты
    */
   render() {
+    const indicators = this.slides.map((slide) => {
+      return `<li data-target="#mainCarousel" data-slide-to="${slide.id}" class="carousel-indicator"></li>`;
+    }).join('');
+    const indicatorsBlock = `
+    <ul class="carousel-indicators">
+      ${indicators}
+    </ul>
+    `;
+
     this.el.innerHTML = `
-      <div id="mainCarousel" class="main-carousel carousel slide">
-          <ol class="carousel-indicators">
-              ${this.slides.map(item => `
-                  <li data-target="#mainCarousel" data-slide-to="${item.id}" class="carousel-indicator"></li>
-               `).join('')}
-          </ol>
+      <div class="main-carousel carousel slide">
+          ${indicatorsBlock}
           <div class="carousel-inner js-active-slide">
               <!-- Вот здесь будет активный слайд, после вызова this.showSlide -->
           </div>
@@ -75,11 +128,6 @@ class Carousel {
   showSlide(id) {
     const el = this.el.querySelector('.js-active-slide');
     const slide = this.slides[id];
-
-    if (!slide) {
-      // Пользователь докликал до конца
-      return;
-    }
 
     this.activeSlide = id;
 
@@ -108,4 +156,5 @@ class Carousel {
   }
 }
 
+// Делает класс доступным глобально, сделано для упрощения, чтобы можно было его вызывать из другого скрипта
 window.Carousel = Carousel;

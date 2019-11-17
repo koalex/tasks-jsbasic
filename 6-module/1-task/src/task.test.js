@@ -2,25 +2,7 @@ describe('6-module-1-task', () => {
   let carousel = null;
 
   beforeEach(() => {
-    const slides = [
-      {
-        id: 0,
-        title: 'BEST LAPTOP DEALS',
-        img: '../../assets/images/default-slide-img.jpg',
-      },
-      {
-        id: 1,
-        title: 'BEST HEADPHONES DEALS',
-        img: '../../assets/images/default-slide-img.jpg',
-      },
-      {
-        id: 2,
-        title: 'BEST SPEAKERS DEALS',
-        img: '../../assets/images/default-slide-img.jpg',
-      },
-    ];
-
-    carousel = new Carousel(document.createElement('div'), slides);
+    carousel = new Carousel(document.createElement('div'));
   });
 
   afterEach(() => {
@@ -49,12 +31,13 @@ describe('6-module-1-task', () => {
       .toEqual(true);
   });
 
-  it('проверяем, что если мы на первом слайде, то идти назад нельзя', () => {
+  it('проверяем, что если мы на первом слайде, то переключаем на последний', () => {
     carousel.el.querySelector('[data-slide="prev"]').dispatchEvent(new Event('click', { bubbles: true }));
     expect(carousel.el.querySelector('.carousel-item.active .carousel-caption .h1').innerHTML)
-      .toEqual('BEST LAPTOP DEALS');
+      .toEqual('BEST SPEAKERS DEALS');
 
-    expect(carousel.el.querySelector('.carousel-indicator[data-slide-to="0"]').classList.contains('active'))
+    expect(carousel.el.querySelector('.carousel-indicator[data-slide-to="2"]').classList.contains('active'))
       .toEqual(true);
   });
+
 });
