@@ -1,35 +1,71 @@
+'use strict';
+
 class ProductList {
+  productsUrl = '/assets/data/products.json';
+  productsStoreKey = 'cart-products';
+
   constructor(element) {
     this.el = element;
+    this.el.addEventListener('click', (event) => this.onClick(event));
   }
 
-  getUrl(category) {
-    return `/assets/data/${category}.json`;
-  }
-
-  show({ id }) {
-    const urlForFetch = this.getUrl(id);
-
+  show() {
     // Здесь код загрузки продуктов через fetch
-    fetch(urlForFetch)
+    return fetch(this.productsUrl)
       .then((resp) => resp.json())
       .then((data) => this.render(data))
       .catch((err) => console.error('show error', err));
   }
 
-  render({ title, items }) {
-    const list = items
+  render(products) {
+    this.allProducts = products;
+
+    const list = products
       .map((product) => this._generateProduct(product))
       .join('');
 
     this.el.innerHTML = `
       <div>
-        <h3 class="section-title">${title}</h3>
+        <h3 class="section-title">
+          Top Recommendations For You | 
+          <a href="/checkout.html">Your Cart</a>
+        </h3>
         <div class="row homepage-cards">
             ${list}
         </div>
       </div>
     `;
+  }
+
+  onClick(event) {
+    let target = event.target;
+    let isAddToCart = target.dataset.buttonRole === 'add-to-cart';
+
+    if (!isAddToCart) {
+      return;
+    }
+
+    let isConfirmed = confirm('Вы уверенны, что хотите добавить товар в корзину?');
+    if (!isConfirmed) {
+      return;
+    }
+
+    let parent = target.closest('.products-list-product');
+    let productToAddId = parseInt(parent.dataset.productId, 10);
+
+    let productListJSON = localStorage.getItem(this.productsStoreKey);
+    let productList = JSON.parse(productListJSON) || [];
+    let isAlreadyAdded = productList.some((product) => product.id === productToAddId);
+
+    if (isAlreadyAdded) {
+      return;
+    }
+
+    let productToAdd = this.allProducts.find((product) => product.id === productToAddId);
+    productList.push(productToAdd);
+
+    let updatedProductListJSON = JSON.stringify(productList);
+    localStorage.setItem(this.productsStoreKey, updatedProductListJSON);
   }
 
   _generateProduct(product) {
@@ -38,19 +74,24 @@ class ProductList {
     const priceHTML = this._generatePrice(product);
 
     return `
-    <div class="col-md-6 col-lg-4 mb-4">
-        <div class="card">
-            <div class="card-img-wrap">
-              <img class="card-img-top" src="${product.imageUrl}" alt="${product.title}"/>
-            </div>
-            <div class="card-body">
-              <h5 class="card-title">${product.title}</h5>
-              <div class="rate">
-                  ${allStarsHTML}
-                  ${ratingReviewsHTML}
-              </div>
-              ${priceHTML}
+    <div data-product-id="${product.id}" class="products-list-product col-md-6 col-lg-4 mb-4">
+      <div class="card">
+        <div class="card-img-wrap">
+          <img class="card-img-top" src="${product.imageUrl}" alt="${product.title}"/>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">${product.title}</h5>
+          <div class="rate">
+              ${allStarsHTML}
+              ${ratingReviewsHTML}
           </div>
+          ${priceHTML}
+          
+          <button class="product-add-to-cart" data-button-role="add-to-cart">
+            Add to cart
+          </button>
+        </div>
+        
       </div>
     </div>
 `;
