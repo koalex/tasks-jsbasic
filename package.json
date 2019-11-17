@@ -7,11 +7,11 @@
     "test": "test"
   },
   "scripts": {
+    "start": "static . -c 1 --port 8080",
     "karma": "karma start karma.conf.js",
     "lint": "eslint \"./*-module/**/*.js\"",
     "lint:fix": "eslint --fix \"./*-module/**/*.js\"",
-    "test": "npm run lint && npm run karma",
-    "serv": "static . -c 1 --port 8080"
+    "test": "npm run lint && npm run karma"
   },
   "repository": {
     "type": "git",
