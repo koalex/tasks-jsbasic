@@ -22,8 +22,8 @@ class Carousel {
   constructor(element) {
     this.el = element;
 
-    this.render();
-    this.showSlide(this.slides[0].id);
+    this._render();
+    this._showSlide(this.slides[0].id);
 
     /**
      * Обратите внимание, здесь используется arrow function, для того чтобы при наступлении события
@@ -62,7 +62,7 @@ class Carousel {
 
   _onIndicatorClick(target) {
     const slideTo = parseInt(target.dataset.slideTo, 10);
-    this.showSlide(slideTo);
+    this._showSlide(slideTo);
   }
 
   _onNextButtonClick(activeSlideId) {
@@ -75,7 +75,7 @@ class Carousel {
       newSlideId = activeSlideId + 1;
     }
 
-    this.showSlide(newSlideId);
+    this._showSlide(newSlideId);
   }
 
   _onPreviousButtonClick(activeSlideId) {
@@ -88,14 +88,14 @@ class Carousel {
       newSlideId = activeSlideId - 1;
     }
 
-    this.showSlide(newSlideId);
+    this._showSlide(newSlideId);
   }
 
 
   /**
    * Функция, которая отвечает за отрисовку компоненты
    */
-  render() {
+  _render() {
     const indicators = this.slides.map((slide) => {
       return `<li data-target="#mainCarousel" data-slide-to="${slide.id}" class="carousel-indicator"></li>`;
     }).join('');
@@ -109,7 +109,7 @@ class Carousel {
       <div class="main-carousel carousel slide">
           ${indicatorsBlock}
           <div class="carousel-inner js-active-slide">
-              <!-- Вот здесь будет активный слайд, после вызова this.showSlide -->
+              <!-- Вот здесь будет активный слайд, после вызова this._showSlide -->
           </div>
           
           <button class="carousel-control-prev" href="#mainCarousel" role="button" data-slide="prev">
@@ -127,7 +127,7 @@ class Carousel {
   /**
    * Метод показывает выбранный слайд
    */
-  showSlide(id) {
+  _showSlide(id) {
     const el = this.el.querySelector('.js-active-slide');
     const slide = this.slides[id];
 
