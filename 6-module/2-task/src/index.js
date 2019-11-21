@@ -1,26 +1,28 @@
-class Menu {
-  /**
-   * Компонент "Меню"
-   * @param {Element} element - корневой элемент, в который будет вставлен компонент меню
-   * @param {Array<Object>} data - массив с данными меню
-   * @example пример структуры одного пункта меню с подменю (только у корневого элемент меню может быть подменю)
-   *   [
-   *   ...
-   *   {
-   *        id: 'cameraphotos',
-   *        title: 'Camera & Photo',
-   *        submenu: [
-   *          {
-   *            id: 'cameraphotos_accessories',
-   *            title: 'Accessories',
-   *          }
-   *        ]
-   *   },
-   *   ... ]
-   */
-  constructor(element, data) {
+'use strict';
+
+class Carousel {
+  slides = [
+    {
+      id: 0,
+      title: 'BEST LAPTOP DEALS',
+      img: './assets/images/default-slide-img.jpg'
+    },
+    {
+      id: 1,
+      title: 'BEST HEADPHONES DEALS',
+      img: './assets/images/default-slide-img.jpg'
+    },
+    {
+      id: 2,
+      title: 'BEST SPEAKERS DEALS',
+      img: './assets/images/default-slide-img.jpg'
+    }
+  ];
+
+  constructor(element) {
+    this.el = element;
   }
 }
 
 // Делает класс доступным глобально, сделано для упрощения, чтобы можно было его вызывать из другого скрипта
-window.Menu = Menu;
+window.Carousel = Carousel;

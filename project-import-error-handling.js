@@ -5,12 +5,12 @@
 (function () {
   let pageUrlMap = [
     {
-      taskName: '6-module-1-task',
-      taskNameDisplay: '1-ая задача из 6-ого занятия'
-    },
-    {
       taskName: '6-module-2-task',
       taskNameDisplay: '2-ая задача из 6-ого занятия'
+    },
+    {
+      taskName: '6-module-3-task',
+      taskNameDisplay: '3-ая задача из 6-ого занятия'
     },
     {
       taskName: '7-module-1-task',

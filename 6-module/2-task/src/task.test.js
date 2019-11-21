@@ -1,76 +1,43 @@
 describe('6-module-2-task', () => {
-  let menu = null;
-
-  const backdrop = document.createElement('div');
-  backdrop.classList.add('backdrop');
-  document.body.appendChild(backdrop);
+  let carousel = null;
 
   beforeEach(() => {
-    const items = [
-      {
-        id: 'cameraphotos',
-        title: 'Camera & Photo',
-        submenu: [
-          {
-            id: 'cameraphotos_accessories',
-            title: 'Accessories',
-          },
-        ],
-      },
-      {
-        id: 'cinema',
-        title: 'Home Cinema, TV & Video',
-        submenu: [
-          {
-            id: 'cinema_audio',
-            title: 'Audio',
-          },
-          {
-            id: 'cinema_video',
-            title: 'Video',
-          },
-        ],
-      },
-
-    ];
-
-    menu = new Menu(document.createElement('div'), items);
+    carousel = new Carousel(document.createElement('div'));
   });
 
   afterEach(() => {
-    backdrop.classList.remove('show');
-    menu = null;
+    carousel = null;
   });
 
-  it('проверяем, что меню содержит все пункты', () => {
-    expect(menu.el.querySelectorAll('.dropdown').length).toEqual(2);
-    expect(menu.el.querySelectorAll('.dropdown-item').length).toEqual(3);
+  it('проверяем, что карусель содержит основные элементы', () => {
+    expect(carousel.el.querySelectorAll('.carousel-inner').length).toEqual(1);
+    expect(carousel.el.querySelectorAll('.carousel-indicator').length).toEqual(3);
   });
 
-  it('проверяем, что при наведении на cameraphotos, покажется его подменю', () => {
-    menu.el.querySelector('.dropdown').dispatchEvent(new Event('mouseenter', { bubbles: false }));
-    expect(menu.el.querySelector('[aria-labelledby="cameraphotos"]').classList.contains('show'))
+  it('проверяем что при инициализации показан первый слайд (id=0)', () => {
+    expect(carousel.el.querySelector('.carousel-item.active .carousel-caption .h1').innerHTML)
+      .toEqual('BEST LAPTOP DEALS');
+
+    expect(carousel.el.querySelector('.carousel-indicator[data-slide-to="0"]').classList.contains('active'))
       .toEqual(true);
   });
 
-  it('проверяем, что при снятии на cameraphotos, меню спрячется', () => {
-    menu.el.querySelector('[aria-labelledby="cameraphotos"]').classList.add('show');
-    menu.el.querySelector('.dropdown').dispatchEvent(new Event('mouseleave', { bubbles: false }));
-    expect(menu.el.querySelector('[aria-labelledby="cameraphotos"]').classList.contains('show'))
-      .toEqual(false);
-  });
+  it('проверяем работу переключателей', () => {
+    carousel.el.querySelector('[data-slide="next"]').dispatchEvent(new Event('click', { bubbles: true }));
+    expect(carousel.el.querySelector('.carousel-item.active .carousel-caption .h1').innerHTML)
+      .toEqual('BEST HEADPHONES DEALS');
 
-  it('проверем, показ затемнения backdrop', () => {
-    menu.el.querySelector('.dropdown').dispatchEvent(new Event('mouseenter', { bubbles: false }));
-    expect(backdrop.classList.contains('show'))
+    expect(carousel.el.querySelector('.carousel-indicator[data-slide-to="1"]').classList.contains('active'))
       .toEqual(true);
   });
 
-  it('проверем, снятие затемнения затемнения backdrop', () => {
-    backdrop.classList.add('show');
-    menu.el.querySelector('.dropdown').dispatchEvent(new Event('mouseleave', { bubbles: false }));
-    expect(backdrop.classList.contains('show'))
-      .toEqual(false);
+  it('проверяем, что если мы на первом слайде, то переключаем на последний', () => {
+    carousel.el.querySelector('[data-slide="prev"]').dispatchEvent(new Event('click', { bubbles: true }));
+    expect(carousel.el.querySelector('.carousel-item.active .carousel-caption .h1').innerHTML)
+      .toEqual('BEST SPEAKERS DEALS');
+
+    expect(carousel.el.querySelector('.carousel-indicator[data-slide-to="2"]').classList.contains('active'))
+      .toEqual(true);
   });
 
 });

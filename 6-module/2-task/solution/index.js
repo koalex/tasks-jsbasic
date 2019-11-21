@@ -1,76 +1,162 @@
-class Menu {
-  /**
-   * Компонент "Меню"
-   * @param {Element} element - корневой элемент, в который будет вставлен компонент меню
-   * @param {Array<Object>} data - массив с данными меню
-   * @example пример структуры одного пункта меню с подменю (только у корневого элемент меню может быть подменю)
-   *   [
-   *   ...
-   *   {
-   *        id: 'cameraphotos',
-   *        title: 'Camera & Photo',
-   *        submenu: [
-   *          {
-   *            id: 'cameraphotos_accessories',
-   *            title: 'Accessories',
-   *          }
-   *        ]
-   *   },
-   *   ... ]
-   */
-  constructor(element, data) {
-    // Ваш код
+'use strict';
+
+class Carousel {
+  slides = [
+    {
+      id: 0,
+      title: 'BEST LAPTOP DEALS',
+      img: './assets/images/default-slide-img.jpg'
+    },
+    {
+      id: 1,
+      title: 'BEST HEADPHONES DEALS',
+      img: './assets/images/default-slide-img.jpg'
+    },
+    {
+      id: 2,
+      title: 'BEST SPEAKERS DEALS',
+      img: './assets/images/default-slide-img.jpg'
+    }
+  ];
+
+  constructor(element) {
     this.el = element;
-    // глобальынй поиск подложки, обратите внимание ее может не быть
-    this.backdrop = document.querySelector('.backdrop');
 
-    this.render(data);
+    this._render();
+    this._showSlide(this.slides[0].id);
 
-    // Так как событие mouseenter и mouseleave не всплвывает,
-    // то находим все элементы списка
-    const els = this.el.querySelectorAll('.dropdown');
+    /**
+     * Обратите внимание, здесь используется arrow function, для того чтобы при наступлении события
+     * в метод this.onClick не потерять this.
+     */
+    this.el.addEventListener('click', event => this.onClick(event));
+  }
 
-    for (const el of els) {
-      el.addEventListener('mouseenter', () => this.toggleMenu(el, true));
-      el.addEventListener('mouseleave', () => this.toggleMenu(el, false));
+  onClick(event) {
+    let target = event.target;
+    const controlButton = target.closest('[role="button"]');
+    const isIndicatorButton = !!target.dataset.slideTo;
+
+    if (controlButton) {
+      this._onControlButtonClick(controlButton);
+      return;
+    }
+
+    if (isIndicatorButton) {
+      this._onIndicatorClick(target);
     }
   }
 
-  toggleMenu(el, state) {
-    el.querySelector('.dropdown-menu').classList.toggle('show', state);
+  _onControlButtonClick(controlButton) {
+    const activeSlideId = this.activeSlide;
+    const slideTo = controlButton.dataset.slide;
 
-    if (this.backdrop) {
-      this.backdrop.classList.toggle('show', state);
+    if (slideTo === 'next') {
+      this._onNextButtonClick(activeSlideId);
+    }
+
+    if (slideTo === 'prev') {
+      this._onPreviousButtonClick(activeSlideId);
     }
   }
 
-  render(data) {
-    const list = data.map((item) => {
-      let submenu = '';
+  _onIndicatorClick(target) {
+    const slideTo = parseInt(target.dataset.slideTo, 10);
+    this._showSlide(slideTo);
+  }
 
-      if (item.submenu && item.submenu.length) {
-        submenu = item.submenu.map(subitem => `
-           <li data-id="${subitem.id}" class="dropdown-item"><a>${subitem.title}</a></li>
-        `).join('');
-      }
+  _onNextButtonClick(activeSlideId) {
+    const isLastSlide = !this.slides[activeSlideId + 1];
+    let newSlideId;
 
-      return `
-        <li class="list-group-item dropdown">
-          <a class="nav-link dropdown-toggle" 
-            id="${item.id}" 
-            data-toggle="dropdown" 
-            aria-haspopup="true" 
-            aria-expanded="false">${item.title}</a>
-          <ul class="dropdown-menu" aria-labelledby="${item.id}">   
-            ${submenu}
-          </ul>
-        </li>
-      `;
+    if (isLastSlide) {
+      newSlideId = 0;
+    } else {
+      newSlideId = activeSlideId + 1;
+    }
+
+    this._showSlide(newSlideId);
+  }
+
+  _onPreviousButtonClick(activeSlideId) {
+    const isFirstSlide = !this.slides[activeSlideId - 1];
+    let newSlideId;
+
+    if (isFirstSlide) {
+      newSlideId = this.slides.length - 1;
+    } else {
+      newSlideId = activeSlideId - 1;
+    }
+
+    this._showSlide(newSlideId);
+  }
+
+
+  /**
+   * Функция, которая отвечает за отрисовку компоненты
+   */
+  _render() {
+    const indicators = this.slides.map((slide) => {
+      return `<li data-target="#mainCarousel" data-slide-to="${slide.id}" class="carousel-indicator"></li>`;
     }).join('');
+    const indicatorsBlock = `
+    <ul class="carousel-indicators">
+      ${indicators}
+    </ul>
+    `;
 
-    this.el.innerHTML = `<ul class="list-group sidebar">${list}</ul>`;
+    this.el.innerHTML = `
+      <div class="main-carousel carousel slide">
+          ${indicatorsBlock}
+          <div class="carousel-inner js-active-slide">
+              <!-- Вот здесь будет активный слайд, после вызова this._showSlide -->
+          </div>
+          
+          <button class="carousel-control-prev" href="#mainCarousel" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+          </button>
+          <button class="carousel-control-next" href="#mainCarousel" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+          </button>
+      </div>
+    `;
+  }
+
+  /**
+   * Метод показывает выбранный слайд
+   */
+  _showSlide(id) {
+    const el = this.el.querySelector('.js-active-slide');
+    const slide = this.slides[id];
+
+    this.activeSlide = id;
+
+    // показываем новый активный слайд
+    el.innerHTML = `
+      <div class="carousel-item active">
+          <img src="${slide.img}" alt="ActiveSlide"/>
+          <div class="container">
+              <div class="carousel-caption">
+                  <h3 class="h1">${slide.title}</h3>
+                  <div>
+                      <a class="btn" href="#" role="button">
+                          View all DEALS
+                          <img src="../../assets/icons/icon-angle-white.svg" class="ml-3" alt=""/>
+                      </a>
+                  </div>
+              </div>
+          </div>
+      </div>
+    `;
+
+    // находим активный индикатор (все остальные деактивируем)
+    for (const indicator of this.el.querySelectorAll('.carousel-indicator')) {
+      indicator.classList.toggle('active', parseInt(indicator.dataset.slideTo, 10) === this.activeSlide);
+    }
   }
 }
 
 // Делает класс доступным глобально, сделано для упрощения, чтобы можно было его вызывать из другого скрипта
-window.Menu = Menu;
+window.Carousel = Carousel;

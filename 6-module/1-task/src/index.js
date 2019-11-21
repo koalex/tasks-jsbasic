@@ -1,28 +1,29 @@
-'use strict';
-
-class Carousel {
-  slides = [
-    {
-      id: 0,
-      title: 'BEST LAPTOP DEALS',
-      img: './assets/images/default-slide-img.jpg'
-    },
-    {
-      id: 1,
-      title: 'BEST HEADPHONES DEALS',
-      img: './assets/images/default-slide-img.jpg'
-    },
-    {
-      id: 2,
-      title: 'BEST SPEAKERS DEALS',
-      img: './assets/images/default-slide-img.jpg'
-    }
-  ];
-
-  constructor(element) {
-    this.el = element;
+/**
+ * Компонент, который реализует таблицу
+ * с возможностью удаления строк
+ *
+ * Пример одного элемента, описывающего строку таблицы
+ *
+ *      {
+     *          name: 'Ilia',
+     *          age: 25,
+     *          salary: '1000',
+     *          city: 'Petrozavodsk'
+     *      },
+ *
+ * @constructor
+ */
+class ClearedTable {
+  constructor(data) {
+    this.el = document.createElement('table');
+    this.data = data;
   }
+
+  /**
+   * Метод который выщывается после удалении строки
+   * @param {number} id - идентификатор удаляемого пользователя
+   */
+  onRemoved(id) {}
 }
 
-// Делает класс доступным глобально, сделано для упрощения, чтобы можно было его вызывать из другого скрипта
-window.Carousel = Carousel;
+window.ClearedTable = ClearedTable;
