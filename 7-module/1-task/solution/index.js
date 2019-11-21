@@ -1,154 +1,102 @@
-'use strict';
+const END = 'завершенно';
+const MS_IN_SEC = 1000; // количество миллисекнуд в секнуден
+const MS_IN_MINUTE = 60 * MS_IN_SEC;
+const MS_IN_HOUR = 60 * MS_IN_MINUTE;
+const MS_IN_DAY = 24 * MS_IN_HOUR;
 
-class ProductList {
-  productsUrl = '/assets/data/products.json';
-  productsStoreKey = 'cart-products';
+class TimeLeft {
+  /**
+   * @param el {Element} - ссылка на корневой элемент
+   */
+  constructor(el) {
+    const { from, to } = el.dataset;
+    const result = [];
 
-  constructor(element) {
-    this.el = element;
-    this.el.addEventListener('click', (event) => this.onClick(event));
-  }
-
-  show() {
-    // Здесь код загрузки продуктов через fetch
-    return fetch(this.productsUrl)
-      .then((resp) => resp.json())
-      .then((data) => this.render(data))
-      .catch((err) => console.error('show error', err));
-  }
-
-  render(products) {
-    this.allProducts = products;
-
-    const list = products
-      .map((product) => this._generateProduct(product))
-      .join('');
-
-    this.el.innerHTML = `
-      <div>
-        <h3 class="section-title">
-          Top Recommendations For You | 
-          <a href="/checkout.html">Your Cart</a>
-        </h3>
-        <div class="row homepage-cards">
-            ${list}
-        </div>
-      </div>
-    `;
-  }
-
-  onClick(event) {
-    let target = event.target;
-    let isAddToCart = target.dataset.buttonRole === 'add-to-cart';
-
-    if (!isAddToCart) {
+    if (!from || !to) {
+      el.innerHTML = END;
       return;
     }
 
-    let isConfirmed = confirm('Вы уверенны, что хотите добавить товар в корзину?');
-    if (!isConfirmed) {
+    const diff = this.parseDate(to) - this.parseDate(from);
+
+    if (diff <= 0) {
+      el.innerHTML = END;
       return;
     }
 
-    let parent = target.closest('.products-list-product');
-    let productToAddId = parseInt(parent.dataset.productId, 10);
+    const days = Math.floor(diff / MS_IN_DAY);
 
-    let productListJSON = localStorage.getItem(this.productsStoreKey);
-    let productList = JSON.parse(productListJSON) || [];
-    let isAlreadyAdded = productList.some((product) => product.id === productToAddId);
-
-    if (isAlreadyAdded) {
-      return;
-    }
-
-    let productToAdd = this.allProducts.find((product) => product.id === productToAddId);
-    productList.push(productToAdd);
-
-    let updatedProductListJSON = JSON.stringify(productList);
-    localStorage.setItem(this.productsStoreKey, updatedProductListJSON);
-  }
-
-  _generateProduct(product) {
-    const allStarsHTML = this._generateStars(product.rating);
-    const ratingReviewsHTML = this._generateReviewsAmount(product.rating);
-    const priceHTML = this._generatePrice(product);
-
-    return `
-    <div data-product-id="${product.id}" class="products-list-product col-md-6 col-lg-4 mb-4">
-      <div class="card">
-        <div class="card-img-wrap">
-          <img class="card-img-top" src="${product.imageUrl}" alt="${product.title}"/>
-        </div>
-        <div class="card-body">
-          <h5 class="card-title">${product.title}</h5>
-          <div class="rate">
-              ${allStarsHTML}
-              ${ratingReviewsHTML}
-          </div>
-          ${priceHTML}
-          
-          <button class="product-add-to-cart" data-button-role="add-to-cart">
-            Add to cart
-          </button>
-        </div>
-        
-      </div>
-    </div>
-`;
-  }
-
-  _generateReviewsAmount(productRating) {
-    if (productRating) {
-      return `
-        <span class="rate-amount ml-2">${productRating.reviewsAmount}</span>
-      `;
-    }
-
-    return '';
-  }
-
-  _generateStars(productRating) {
-    let ratingStarsCount;
-    if (productRating) {
-      ratingStarsCount = productRating.stars;
-    } else {
-      ratingStarsCount = 0;
-    }
-
-    let allStarsHTML = '';
-    let maximumStarsCount = 5;
-    let star = '<i class="icon-star"></i>';
-    let starChecked = '<i class="icon-star checked"></i>';
-
-    for (let i = 0; i < maximumStarsCount; i++) {
-      if (ratingStarsCount === 0) {
-        allStarsHTML += star;
+    if (days > 0) {
+      if (days === 1) {
+        result.push('1 день');
+      } else if (days > 1 && days < 5) {
+        result.push(`${days} дня`);
       } else {
-        allStarsHTML += starChecked;
-        ratingStarsCount--;
+        result.push(`${days} дней`);
       }
     }
 
-    return allStarsHTML;
+    const hours = Math.floor((diff - days * MS_IN_DAY) / MS_IN_HOUR);
+
+    if (hours > 0) {
+      if (hours === 1) {
+        result.push('1 час');
+      } else if (hours > 1 && hours < 5) {
+        result.push(`${hours} часа`);
+      } else {
+        result.push(`${hours} часов`);
+      }
+    }
+
+    const minutes = Math.floor((diff - (days * MS_IN_DAY + hours * MS_IN_HOUR)) / MS_IN_MINUTE);
+
+    if (minutes > 0) {
+      if (minutes === 1) {
+        result.push('1 минута');
+      } else if (minutes > 1 && minutes < 5) {
+        result.push(`${minutes} минуты`);
+      } else {
+        result.push(`${minutes} минут`);
+      }
+    }
+
+    const seconds = Math.floor((diff - (days * MS_IN_DAY + hours * MS_IN_HOUR + minutes * MS_IN_MINUTE)) / MS_IN_SEC);
+
+    if (seconds > 0) {
+      if (seconds === 1) {
+        result.push('1 секунда');
+      } else if (seconds > 1 && seconds < 5) {
+        result.push(`${seconds} секунды`);
+      } else {
+        result.push(`${seconds} секунд`);
+      }
+    }
+
+    el.innerHTML = result.join(', ');
   }
 
-  _generatePrice(product) {
-    if (product.oldPrice) {
-      return `
-        <p class="card-text price-text discount">
-            <strong>${product.price}</strong>
-            <small class="ml-2">${product.oldPrice}</small>
-        </p>
-      `;
-    } else {
-      return `
-        <p class="card-text price-text">
-            <strong>${product.price}</strong>
-        </p>
-      `;
-    }
+  /**
+   * Форматируем строку в дату. Чтобы написать данный метод нужно почитать
+   * главу http://learn.javascript.ru/datetime
+   * @param {string} str - строка с датой в формате `year.month.day hours:minutes:second`
+   * @return {Date} - возвращаем объект даты
+   */
+  parseDate(str) {
+    const [date, time] = str.split(' ');
+    const [hours, minutes, second] = time.split(':');
+    const [year, month, day] = date.split('.');
+
+    return new Date(+year, month - 1, +day, +hours, +minutes, +second);
+  }
+
+  /**
+   * Статчный метод, который можно вызывать не посредственно от класса, а не от объекта.
+   * Подробнее здесь http://learn.javascript.ru/es-class#staticheskie-svoystva
+   * @param el
+   */
+  static create(el) {
+    return new TimeLeft(el);
   }
 }
 
-// Делает класс доступным глобально, сделано для упрощения, чтобы можно было его вызывать из другого скрипта
-window.ProductList = ProductList;
+window.TimeLeft = TimeLeft;

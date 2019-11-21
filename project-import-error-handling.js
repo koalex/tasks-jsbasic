@@ -13,8 +13,8 @@
       taskNameDisplay: '3-ая задача из 6-ого занятия'
     },
     {
-      taskName: '7-module-1-task',
-      taskNameDisplay: '1-ая задача из 7-ого занятия'
+      taskName: '8-module-1-task',
+      taskNameDisplay: '1-ая задача из 8-ого занятия'
     },
     {
       taskName: '9-module-1-task',

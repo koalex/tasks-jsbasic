@@ -1,105 +1,86 @@
 describe('7-module-1-task', () => {
-  let productList = null;
-  let oldFetch = window.fetch;
-  let parentElement;
-  let products;
-  let product;
+  it('проверяем когда остался 1 день, 1 час', () => {
+    const el = document.createElement('div');
 
-  function mockFetch(data) {
-    window.fetch = function () {
-      return Promise.resolve({json: () => Promise.resolve(data)});
-    };
-  }
+    el.innerHTML = `
+            <div>
+                До конца акции осталось 
+                <span class="js-time-left time-left" data-from="2018.01.01 00:00:00" data-to="2018.01.02 01:00:00">
+                </span>
+            </div>
+        `;
 
-  function getProductAddButton() {
-    let productElements = parentElement.querySelectorAll('.products-list-product');
-    let productElement = productElements[0];
+    const timeEl = el.querySelector('.js-time-left');
+    TimeLeft.create(timeEl);
 
-    return productElement
-      .querySelector('.product-add-to-cart');
-  }
-
-  function checkIsProductAddedToCart(product) {
-    let productsFromStorageJSON = localStorage.getItem('cart-products');
-    let productsFromStorage = JSON.parse(productsFromStorageJSON);
-
-    return !!productsFromStorage && productsFromStorage.some((productsFromStorage) => {
-      return productsFromStorage.id === product.id;
-    });
-  }
-
-  beforeEach(() => {
-    product = {
-      id: 1,
-      title: 'Nuraphone - Wireless Bluetooth Over-Ear Headphones',
-      imageUrl: '/assets/images/headphones.png',
-      rating: {
-        stars: 4,
-        reviewsAmount: 24
-      },
-      price: '€ 399',
-      oldPrice: null
-    };
-    products = [product];
-
-    mockFetch(products);
-
-    parentElement = document.createElement('div');
-
-    productList = new ProductList(parentElement);
+    expect(timeEl.innerHTML).toEqual('1 день, 1 час');
   });
 
-  afterEach(() => {
-    productList = null;
-    window.fetch = oldFetch;
+  it('проверяем когда осталось 10 деней', () => {
+    const el = document.createElement('div');
+
+    el.innerHTML = `
+            <div>
+                До конца акции осталось 
+                <span class="js-time-left time-left" data-from="2018.01.01 00:00:00" data-to="2018.01.11 00:00:00">
+                </span>
+            </div>
+        `;
+
+    const timeEl = el.querySelector('.js-time-left');
+    TimeLeft.create(timeEl);
+
+    expect(timeEl.innerHTML).toEqual('10 дней');
   });
 
-  it('проверяем отрисовку', async () => {
-    await productList.show();
+  it('проверяем когда завершенно', () => {
+    const el = document.createElement('div');
 
-    expect(productList.el.querySelector('.card-title').innerHTML)
-      .toEqual('Nuraphone - Wireless Bluetooth Over-Ear Headphones');
+    el.innerHTML = `
+            <div>
+                До конца акции осталось 
+                <span class="js-time-left time-left" data-from="2018.01.01 01:00:00" data-to="2018.01.01 00:00:00">
+                </span>
+            </div>
+        `;
+
+    const timeEl = el.querySelector('.js-time-left');
+    TimeLeft.create(timeEl);
+
+    expect(timeEl.innerHTML).toEqual('завершенно');
   });
 
-  describe('Добавление в корзину', () => {
-    let confirmSpyObj;
+  it('проверяем когда осталось 10 часов, 2 минуты', () => {
+    const el = document.createElement('div');
 
-    beforeEach(() => {
-      localStorage.clear();
-      confirmSpyObj = spyOn(window, 'confirm');
-    });
+    el.innerHTML = `
+            <div>
+                До конца акции осталось 
+                <span class="js-time-left time-left" data-from="2018.01.01 00:00:00" data-to="2018.01.01 10:02:00">  
+                </span>
+            </div>
+        `;
 
-    afterEach(() => {
-      confirmSpyObj.and.callThrough();
-    });
+    const timeEl = el.querySelector('.js-time-left');
+    TimeLeft.create(timeEl);
 
-    it('не должна добавлять товар если пользователь отменил добавление', async () => {
-      await productList.show();
-
-      confirmSpyObj.and.returnValue(false);
-
-      let productElementAddButton = getProductAddButton();
-      productElementAddButton
-        .dispatchEvent(new MouseEvent('click', { bubbles: true }));
-
-      let isProductAddedToCart = checkIsProductAddedToCart(product);
-
-      expect(isProductAddedToCart).toBe(false);
-    });
-
-    it('должна добавлять товар в корзину', async () => {
-      await productList.show();
-
-      confirmSpyObj.and.returnValue(true);
-
-      let productElementAddButton = getProductAddButton();
-      productElementAddButton
-        .dispatchEvent(new MouseEvent('click', { bubbles: true }));
-
-      let isProductAddedToCart = checkIsProductAddedToCart(product);
-
-      expect(isProductAddedToCart).toBe(true);
-    });
+    expect(timeEl.innerHTML).toEqual('10 часов, 2 минуты');
   });
 
+  it('проверяем когда 2 минуты, 30 секунд', () => {
+    const el = document.createElement('div');
+
+    el.innerHTML = `
+            <div>
+                До конца акции осталось 
+                <span class="js-time-left time-left" data-from="2018.01.01 00:00:00" data-to="2018.01.01 00:02:30">
+                </span>
+            </div>
+        `;
+
+    const timeEl = el.querySelector('.js-time-left');
+    TimeLeft.create(timeEl);
+
+    expect(timeEl.innerHTML).toEqual('2 минуты, 30 секунд');
+  });
 });
