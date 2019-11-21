@@ -1,19 +1,8 @@
-## Занятие 5: Атрибуты DOM ##
+## Занятие 5: Обработчики событий  ##
 
-На этом занятии мы поговорили о том, что такое атрибуты.
-А также посмотрели основные свойства, которые полезны при работе с DOM.
-
-Для закрепления материала, я предлагаю почитать следующие главы из учебника:
-
-- [Свойства узлов: тип, тег и содержимое](http://learn.javascript.ru/basic-dom-node-properties)
-- [Атрибуты и DOM-свойства](http://learn.javascript.ru/attributes-and-custom-properties)
-- [Методы contains и compareDocumentPosition](http://learn.javascript.ru/compare-document-position)
-- [Добавление и удаление узлов](http://learn.javascript.ru/modifying-document)
-- [Мультивставка: insertAdjacentHTML и DocumentFragment](http://learn.javascript.ru/multi-insert)
-- [Метод document.write](http://learn.javascript.ru/document-write)
-- [Стили, getComputedStyle](http://learn.javascript.ru/styles-and-classes)
-- [Введение в браузерные события](http://learn.javascript.ru/introduction-browser-events)
-- [Порядок обработки событий](http://learn.javascript.ru/events-and-timing-depth)
-- [Объект события](http://learn.javascript.ru/obtaining-event-object)
-- [Всплытие и перехват](http://learn.javascript.ru/event-bubbling)
+- [Введение в браузерные события](http://learn.javascript.ru/introduction-browser-events) 
+- [Всплытие и погружение](http://learn.javascript.ru/bubbling-and-capturing)
 - [Делегирование событий](http://learn.javascript.ru/event-delegation)
+- [Действия браузера по умолчанию](http://learn.javascript.ru/default-browser-action)
+- [Основы событий мыши](http://learn.javascript.ru/mouse-events-basics)
+- [Генерация пользовательских событий](http://learn.javascript.ru/dispatch-events)

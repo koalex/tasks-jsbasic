@@ -1,15 +1,19 @@
-## Занятие 7: Асинхронность и Сеть ##
+## Занятие 7:  Взаимодействие с сервером ##
 
-На дом
- - [setTimeout и setInterval](http://learn.javascript.ru/settimeout-setinterval)
- - [Введение в AJAX и COMET](http://learn.javascript.ru/ajax-intro)
- - [Основы XMLHttpRequest](http://learn.javascript.ru/ajax-xmlhttprequest)
- - [Дата и время](http://learn.javascript.ru/datetime) 
+На дом:
+
+**Формы:**
+- [Свойства и методы формы](http://learn.javascript.ru/form-elements)
+- [Фокусировка: focus/blur](http://learn.javascript.ru/focus-blur)
+- [События: change, input, cut, copy, paste](http://learn.javascript.ru/events-change-input)
+- [Отправка формы: событие и метод submit](http://learn.javascript.ru/forms-submit)
+
+**Сеть:**
+- [Fetch](http://learn.javascript.ru/fetch)
+- [FormData](http://learn.javascript.ru/formdata)
+- [Промисы](http://learn.javascript.ru/promise-basics)
+- [Формат JSON, метод toJSON](http://learn.javascript.ru/json)
 
 Дополнительно скидываю ссылку на книгу, которая дает 
 по моему мнению наиболее полное понимание принципов 
 HTTP https://www.amazon.com/HTTP-Definitive-Guide-Guides/dp/1565925092
-
-Также мы поговорили про EventLoop и асинхронную природу JS.
-В связи с этим рекомендую посмотреть вот это вот 
-видео https://www.youtube.com/watch?v=8cV4ZvHXQL4
