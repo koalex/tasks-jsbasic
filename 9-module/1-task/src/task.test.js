@@ -98,14 +98,29 @@ describe('9-module-1-task', () => {
   });
 
   describe('удаление', () => {
-    it('должна удалять товар из верстки', function () {
-      spyOn(window, 'confirm').and.returnValue(true);
+    let confirmSpyObj;
+    let productElement;
+    let product;
+    let productElementRemoveButton;
 
-      let productElements = parentElement.querySelectorAll('.product-wrapper');
-      let productElement = productElements[3];
-      let product = products[3];
-      let productElementRemoveButton = productElement
+    beforeEach(() => {
+      confirmSpyObj = spyOn(window, 'confirm');
+      const productElements = parentElement.querySelectorAll('.product-wrapper');
+      productElement = productElements[3];
+      product = products[3];
+      productElementRemoveButton = productElement
         .querySelector('.product-remove-button');
+
+      productElementRemoveButton
+        .dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    });
+
+    afterEach(() => {
+      confirmSpyObj.and.callThrough();
+    });
+
+    it('должна удалять товар из верстки', function () {
+      confirmSpyObj.and.returnValue(true);
 
       productElementRemoveButton
         .dispatchEvent(new MouseEvent('click', { bubbles: true }));
@@ -119,13 +134,7 @@ describe('9-module-1-task', () => {
     });
 
     it('не должна удалять товар если пользователь отменил удаление', function () {
-      spyOn(window, 'confirm').and.returnValue(false);
-
-      let productElements = parentElement.querySelectorAll('.product-wrapper');
-      let productElement = productElements[3];
-      let product = products[3];
-      let productElementRemoveButton = productElement
-        .querySelector('.product-remove-button');
+      confirmSpyObj.and.returnValue(false);
 
       productElementRemoveButton
         .dispatchEvent(new MouseEvent('click', { bubbles: true }));
@@ -139,13 +148,7 @@ describe('9-module-1-task', () => {
     });
 
     it('должна удалять товар из хранилища', function () {
-      spyOn(window, 'confirm').and.returnValue(true);
-
-      let productElements = parentElement.querySelectorAll('.product-wrapper');
-      let productElement = productElements[3];
-      let product = products[3];
-      let productElementRemoveButton = productElement
-        .querySelector('.product-remove-button');
+      confirmSpyObj.and.returnValue(true);
 
       productElementRemoveButton
         .dispatchEvent(new MouseEvent('click', { bubbles: true }));
