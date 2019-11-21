@@ -3,7 +3,19 @@
 */
 
 (function () {
-  let checkoutPageUrlMap = [
+  let pageUrlMap = [
+    {
+      taskName: '6-module-1-task',
+      taskNameDisplay: '1-ая задача из 6-ого занятия'
+    },
+    {
+      taskName: '6-module-2-task',
+      taskNameDisplay: '2-ая задача из 6-ого занятия'
+    },
+    {
+      taskName: '7-module-1-task',
+      taskNameDisplay: '1-ая задача из 7-ого занятия'
+    },
     {
       taskName: '9-module-1-task',
       taskNameDisplay: '1-ая задача из 9-ого занятия'
@@ -18,8 +30,8 @@
     }
 
     let scriptSrc = error.target.src;
-    for (let i = 0; i < checkoutPageUrlMap.length; i++) {
-      let task = checkoutPageUrlMap[i];
+    for (let i = 0; i < pageUrlMap.length; i++) {
+      let task = pageUrlMap[i];
 
       if (scriptSrc.includes(task.taskName)) {
         showImportWarningForTask(task);

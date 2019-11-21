@@ -833,6 +833,27 @@ form button[type="submit"]:not(.btn-send) {
     padding: 1.5rem 1.5rem 1.5rem .25rem;
 }
 
+/* Styles for base page BEGIN */
+.project-component-sample {
+  padding: 30px;
+  border: 4px dashed #BADA55;
+  font-weight: bold;
+}
+
+.project-component-sample_main {
+  margin-top: 20px;
+}
+
+/* Styles for base page END */
+
+
+/* Styles for product in Product List BEGIN*/
+.product-add-to-cart {
+  margin-top: auto;
+}
+/* Styles for product in Product List END*/
+
+
 /* Styles for product on checkout page BEGIN*/
 .product-wrapper {
   width: 100%;

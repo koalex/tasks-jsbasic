@@ -51,7 +51,7 @@ class Menu {
       if (item.submenu && item.submenu.length) {
         submenu = item.submenu.map(subitem => `
            <li data-id="${subitem.id}" class="dropdown-item"><a>${subitem.title}</a></li>
-        `);
+        `).join('');
       }
 
       return `

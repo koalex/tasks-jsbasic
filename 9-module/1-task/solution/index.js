@@ -8,8 +8,7 @@ class CheckoutProductList {
   }
 
   render(parentElement) {
-    let productListJSON = localStorage.getItem(this.productsStoreKey);
-    let productList = JSON.parse(productListJSON) || [];
+    let productList = this._getProductList();
 
     let products = productList
       .map((product) => this._generateProduct(product))
@@ -23,10 +22,10 @@ class CheckoutProductList {
 
     let productListElement = parentElement.querySelector('.product-list-box');
 
-    productListElement.addEventListener('click', (event) => this.onListClick(event, productList));
+    productListElement.addEventListener('click', (event) => this.onListClick(event));
   }
 
-  onListClick(event, productList) {
+  onListClick(event) {
     let target = event.target;
     let isRemove = target.dataset.buttonRole === 'checkout-remove-product';
 
@@ -36,6 +35,7 @@ class CheckoutProductList {
 
     let isConfirmed = confirm('Вы уверенны, что хотите удалить этот товар из корзины?');
     if (isConfirmed) {
+      let productList = this._getProductList();
       let parent = target.closest('.product-wrapper');
       let removeProductId = parseInt(parent.dataset.productId, 10);
 
@@ -124,6 +124,11 @@ class CheckoutProductList {
     }
 
     return allStarsHTML;
+  }
+
+  _getProductList() {
+    let productListJSON = localStorage.getItem(this.productsStoreKey);
+    return JSON.parse(productListJSON) || [];
   }
 }
 

@@ -1,8 +1,18 @@
-## Проект, компонента ProductList:
+## Учебный проект: компонента ProductList
 
 ### Что нужно сделать:
 Создать класс компонеты ProductList, которая будет рисовать список товаров внутрь заданного элемента.
 Конструктор класса принимает элемент, в который он вставляет свою разметку. Массив товаров нужно получить с сервера, сделав запрос.
+Всю логику с запросом и отрисовкой, нужно поместить в метод `show()`. Причем этот метод должен вернуть промис от отрисовки.
+Пример использования:
+```JavaScript
+const element = document.querySelector('.product-list');
+const productList = new ProductList(element);
+
+productList.show()
+  .then(() => console.log('Как я писал ранее, метод должен вернуть промис'));
+
+```
 
 ### Примерный алгоритм выполнения:
 
@@ -10,6 +20,7 @@
 Пример объекта для ОДНОГО товара:
 ```javascript
 const product = {
+    id: 1, // Уникальный идентификатор товара
     title: 'Название товара',
     imageUrl: '/ссылка на картинку',
     // Свойство rating либо объект, либо null, если никто не оставил отзыв
@@ -37,7 +48,7 @@ const product = {
 
 - Разметка карточки товара:
 ```html
-<div class="col-md-6 col-lg-4 mb-4">
+<div data-product-id="1" class="products-list-product col-md-6 col-lg-4 mb-4">
     <div class="card">
         <div class="card-img-wrap">
             <img class="card-img-top" src="https://iliakan.github.io/course-project/assets/images/turntable.png" alt="Card image cap">
@@ -54,6 +65,10 @@ const product = {
             </div>
             <p class="card-text price-text discount"><strong>€ 129.92</strong>
             <small class="ml-2">€ 250</small></p>
+            
+            <button class="product-add-to-cart" data-button-role="add-to-cart">
+              Add to cart
+            </button>
         </div>
     </div>
 </div>
@@ -84,7 +99,10 @@ const product = {
 ```html
 <div class="row justify-content-end">
     <div class="col-lg-9">
-        <h3 class="section-title">Top Recommendations for You</h3>
+        <h3 class="section-title">
+          Top Recommendations For You | 
+          <a href="/checkout.html">Your Cart</a>
+        </h3>
         <div class="row homepage-cards">
             <div class="col-md-6 col-lg-4 mb-4">
                 <div class="card">
@@ -111,4 +129,25 @@ const product = {
 </div>
 ```
 
-3. Втставить разметку в элемент, который передается как параметр в конструктор при создании компоненты
+3. Вставить разметку в элемент, который передается как параметр в конструктор при создании компоненты
+4. Добавлени товара в корзину
+
+Список товаров, добавленных в корзину, мы будем хранить в [localStorage](http://learn.javascript.ru/localstorage).
+
+!!! Ключ, который нужно использовать для хранения - `'cart-products'`
+
+У каждого товара есть кнопка для добавления в корзину (`Add to cart`). 
+В этом пункте вы реализуете процесс добавления.
+
+- Т.к. товаров в корзине может быть любое количество, 
+рекомендуется использовать прием [Делегирование событий](http://learn.javascript.ru/event-delegation);
+Т.е. навесить только один обработчик на родительский элемент, который мы передаем как параметр
+  - `data-button-role="add-to-cart"` - дата-атрибут на кнопке добавления
+- Перед добавлением элемента со страницы, рекомендуется переспросить у пользователя с помощью встроенной функции
+`confirm('Вы уверенны, что хотите добавить этот товар в корзину?')`
+- После добавления, нужно записать новый список товаров в `localStorage`. Это важно для следующей компоненты.
+- Каждая карточка товара имеет атрибут с id этого товара - `data-product-id="${product.id}"`, это нужно чтобы понять, какой именно товар мы добавляем при клике.
+- Каждая карточка товара имеет класс `products-list-product`
+- Обратите внимание, т.к. в `localStorage` все хранится как строка, то при добавлении товара, вам нужно полностью перезаписать весь список
+- Также нужно учесть ситуацию, когда мы пытаемся добавить товар, который и так уже в корзине, и не добавлять его.
+  
