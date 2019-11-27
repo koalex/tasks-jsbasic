@@ -5,12 +5,8 @@ module.exports = {
     mocha: true
   },
   parser: 'babel-eslint',
-  globals: {
-    Atomics: 'readonly',
-    SharedArrayBuffer: 'readonly'
-  },
   parserOptions: {
-    ecmaVersion: 2018,
+    ecmaVersion: 2020,
     sourceType: 'module',
   },
   rules: {
