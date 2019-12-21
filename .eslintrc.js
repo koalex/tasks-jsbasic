@@ -41,7 +41,6 @@ module.exports = {
     'func-call-spacing': 'warn',
     'key-spacing': 'warn',
     'keyword-spacing': 'warn',
-    'linebreak-style': ['warn', 'unix'], // we can check this in git as well
     'new-cap': 'warn',
     'no-mixed-spaces-and-tabs': 'warn',
     'one-var': ['warn', {
@@ -49,7 +48,6 @@ module.exports = {
       let: 'never',
       const: 'never'
     }],
-    'quotes': ['warn', 'single', {allowTemplateLiterals: true}],
     'semi': 'warn',
     'space-in-parens': ['warn', 'never'],
     'space-before-blocks': 'warn',
