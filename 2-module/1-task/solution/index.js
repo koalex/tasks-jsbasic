@@ -1,22 +1,18 @@
 /**
- * Клонируем объект
- * @param {Object} obj - клонируем объект
- * @returns {Object}
+ * Складываем зарплаты
+ * @param {Object} salaries - объект зарплат
+ * @returns {Number}
  */
-function clone(obj) {
-  const result = {};
+function sumSalary(salaries) {
+  let sumOfSalaries = 0;
 
-  if (typeof obj !== 'object') {
-    return obj;
-  }
+  for (let key in salaries) {
+    let isSalary = typeof salaries[key] === 'number';
 
-  for (const key in obj) {
-    if (typeof obj[key] === 'object' && obj[key] !== null) {
-      result[key] = clone(obj[key]);
-    } else {
-      result[key] = obj[key];
+    if (isSalary) {
+      sumOfSalaries += salaries[key];
     }
   }
 
-  return result;
+  return sumOfSalaries;
 }

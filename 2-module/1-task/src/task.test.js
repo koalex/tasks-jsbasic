@@ -1,22 +1,34 @@
 describe('2-module-1-task', () => {
-  it('проверяем клонирование плоских объектов', () => {
-    const obj = { test: 1 };
+  it('дожна складывать все зарплаты', () => {
+    let salaries = {
+      John: 1000,
+      Ann: 1600,
+      Pete: 1300
+    };
 
-    expect(clone(obj) !== obj).toEqual(true);
-    expect(clone(obj).test === obj.test).toEqual(true);
+    expect(sumSalary(salaries)).toEqual(3900);
   });
-  it('проверяем вложенных объектов', () => {
-    const obj = { test: { test2: { test3: '1' } } };
 
-    expect(clone(obj) !== obj).toEqual(true);
-    expect(clone(obj).test.test2 !== obj.test.test2).toEqual(true);
-    expect(clone(obj).test.test2.test3 === obj.test.test2.test3).toEqual(true);
+  it('должна игнорировать свойства других типов', () => {
+    let salaries = {
+      John: 1000,
+      Ann: 1600,
+      Pete: 1300,
+      month: 'December',
+      currency: 'USD',
+      isPayed: false
+    };
+
+    expect(sumSalary(salaries)).toEqual(3900);
   });
-  it('проверяем корректную обработку null (typeof null === "object")', () => {
-    const obj = { test: { test2: { test3: null } } };
 
-    expect(clone(obj) !== obj).toEqual(true);
-    expect(clone(obj).test.test2 !== obj.test.test2).toEqual(true);
-    expect(clone(obj).test.test2.test3 === obj.test.test2.test3).toEqual(true);
+  it('должна возвращать 0 если нет свойств с зарплатами', () => {
+    let salaries = {
+      month: 'December',
+      currency: 'USD',
+      isPayed: false
+    };
+
+    expect(sumSalary(salaries)).toEqual(0);
   });
 });

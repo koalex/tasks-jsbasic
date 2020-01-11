@@ -1,7 +1,8 @@
 /**
- * Клонируем объект
- * @param {Object} obj - клонируем объект
- * @returns {Object}
+ * Складываем зарплаты
+ * @param {Object} salaries - объект зарплат
+ * @returns {Number}
  */
-function clone(obj) {
+function sumSalary(salaries) {
+
 }
