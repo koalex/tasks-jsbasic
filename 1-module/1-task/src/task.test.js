@@ -1,9 +1,17 @@
 describe('1-module-1-task', () => {
-  it('при возведении 2 в 3ю степень результат 8', () => {
-    expect(pow(2, 3)).toEqual(8);
+  it('факториал 0 равен 1', () => {
+    expect(factorial(0)).toEqual(1);
   });
 
-  it('при возведении 3 в 4ю степень равен 81', () => {
-    expect(pow(3, 4)).toEqual(81);
+  it('факториал 1 равен 1', () => {
+    expect(factorial(1)).toEqual(1);
+  });
+
+  it('факториал 3 равен 6 ', () => {
+    expect(factorial(3)).toEqual(6);
+  });
+
+  it('факториал 5 равен 120 ', () => {
+    expect(factorial(5)).toEqual(120);
   });
 });

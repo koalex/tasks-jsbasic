@@ -1,9 +1,8 @@
 /**
- * Power
- * @param {number} m base
- * @param {number} n index
+ * Factorial
+ * @param {number} n
  * @returns {number}
  */
-function pow(m, n) {
+function factorial(n) {
 
 }
