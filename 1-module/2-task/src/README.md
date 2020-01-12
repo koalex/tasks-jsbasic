@@ -7,9 +7,6 @@
 /**
  * Эту функцию трогать не нужно
  */
-/**
- * Эту функцию трогать не нужно
- */
 function print(text) {
   console.log(text);
 }
@@ -21,6 +18,9 @@ function print(text) {
 function isValid(name) {
 }
 
+/**
+ * Эту функцию трогать не нужно
+ */
 function sayHello() {
   const userName = prompt('Введите ваше имя');
 
