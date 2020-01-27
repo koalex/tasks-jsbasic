@@ -4,7 +4,7 @@
 
 Функция должна быть нечувствительна к регистру:
 
-```javascript
+```js
 checkSpam('1XbeT now') === true
 checkSpam('free xxxxx') === true
 checkSpam('innocent rabbit') === false

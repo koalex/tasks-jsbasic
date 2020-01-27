@@ -6,7 +6,7 @@
 - Проставит класс male/female, в зависимости от содержимого ячейки Gender
 - Установит inline-стиль style="text-decoration: line-through", если значение ячейки Age меньше 18
 
-```javascript
+```js
 'use strict';
 
 /**

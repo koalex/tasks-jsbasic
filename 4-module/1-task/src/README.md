@@ -4,7 +4,7 @@
 друзей на странице в виде стандартного html списка (ul, li).
 
 Массив с друзьями имеет следующий формат:
-```javascript
+```js
 let friends = [
     {
         firstName: 'Artsiom',

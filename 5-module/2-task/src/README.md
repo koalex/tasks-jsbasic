@@ -4,7 +4,7 @@
 сортируемую таблицу для заранее опредленной структуры данных.
 
 Пример структуры:
-```javascript
+```js
 let rows = [
     {
         name: 'Ilia',
@@ -45,7 +45,7 @@ let rows = [
 ```
 
 Данный компонент предполагается использовать следующим образом:
-```javascript
+```js
 let table = new SortableTable(rows);
 let container = document.querySelector('.result');
 

@@ -7,7 +7,7 @@
  - как-то сообщить вызывающему коду, что строка удалена
 
 Пример структуры:
-```javascript
+```js
 let rows = [
     {
         id: 1,
@@ -52,7 +52,7 @@ let rows = [
 ```
 
 Данный компонент предполагается использовать следующим образом:
-```javascript
+```js
 let table = new ClearedTable(rows);
 document.querySelector('.result').appendChild(table.el);
 
